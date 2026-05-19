@@ -1317,93 +1317,10 @@
         <!-- KPI Cards -->
         
     <!-- KPI Cards по годам -->
-    <div class="kpi-years-container">
-        
-        <!-- 2024 ГОД -->
-        <div class="year-section">
-            <h2 class="year-title">2024 год</h2>
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-label">Оборот 2024</div>
-                    <div class="kpi-value">$499,168</div>
-                    <div class="kpi-change positive">Полный год</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Прибыль 2024</div>
-                    <div class="kpi-value">$144,434</div>
-                    <div class="kpi-change">28.9% маржа</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Себестоимость 2024</div>
-                    <div class="kpi-value">$354,734</div>
-                    <div class="kpi-change neutral">Затраты на товары</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Продано штук 2024</div>
-                    <div class="kpi-value">633,073</div>
-                    <div class="kpi-change">шт</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2025 ГОД -->
-        <div class="year-section">
-            <h2 class="year-title">2025 год</h2>
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-label">Оборот 2025</div>
-                    <div class="kpi-value">$702,576</div>
-                    <div class="kpi-change positive">+40.7% vs 2024</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Прибыль 2025</div>
-                    <div class="kpi-value">$232,991</div>
-                    <div class="kpi-change positive">+61.3% vs 2024</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Себестоимость 2025</div>
-                    <div class="kpi-value">$469,585</div>
-                    <div class="kpi-change neutral">Затраты на товары</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Продано штук 2025</div>
-                    <div class="kpi-value">699,228</div>
-                    <div class="kpi-change positive">+10.4% vs 2024</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2026 ГОД (5 месяцев) -->
-        <div class="year-section">
-            <h2 class="year-title">2026 год <span style="font-size: 0.7em; font-weight: 400;">(Январь-Май)</span></h2>
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-label">Оборот 2026</div>
-                    <div class="kpi-value">$395,269</div>
-                    <div class="kpi-change neutral">За 5 месяцев</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Прибыль 2026</div>
-                    <div class="kpi-value">$140,715</div>
-                    <div class="kpi-change neutral">За 5 месяцев</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Себестоимость 2026</div>
-                    <div class="kpi-value">$254,554</div>
-                    <div class="kpi-change neutral">Затраты на товары</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Продано штук 2026</div>
-                    <div class="kpi-value">268,069</div>
-                    <div class="kpi-change neutral">шт</div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
+    <div class="kpi-years-container" id="kpiYearsContainer"></div>
 
     <!-- Charts Section 1: Main Metrics -->
-        <div class="charts-grid">
+        <div class="charts-grid" id="salesChartsGrid1">
             <div class="chart-card">
                 <h3 class="chart-title">Оборот по годам</h3>
                 <div class="chart-container">
@@ -1419,7 +1336,7 @@
         </div>
 
         <!-- Charts Section 2: Monthly Trends -->
-        <div class="charts-grid">
+        <div class="charts-grid" id="salesChartsGrid2">
             <div class="chart-card full-width">
                 <h3 class="chart-title">Месячная динамика оборота</h3>
                 <div class="chart-container tall">
@@ -1441,7 +1358,7 @@
         </div>
 
         <!-- Categories Analysis -->
-        <div class="categories-section">
+        <div class="categories-section" id="salesCategoriesSection">
             <h2 class="section-title">Анализ по категориям</h2>
             
             <div class="categories-grid">
@@ -1480,7 +1397,7 @@
         </div>
 
         <!-- Filials Analysis - Топ-10 филиалов -->
-        <div class="filials-section">
+        <div class="filials-section" id="filialsSection">
             <h2 class="section-title">🏪 Анализ филиалов</h2>
             
             <!-- KPI карточки филиалов -->
@@ -1566,7 +1483,7 @@
     </div>
 
     <script>
-        const dashboardData = {"totals": {"profit": {"2024": 144434.33599999998, "2025": 232991.40499999997, "2026": 140715.32799999998}, "revenue": {"2024": 499168.278, "2025": 702576.262, "2026": 395269.15099999995}, "quantity": {"2024": 633073.0, "2025": 699228.0, "2026": 268069.0}, "cost": {"2024": 354733.94200000004, "2025": 469584.857, "2026": 254553.82299999997}}, "categories": [{"name": "USB", "profit_2024": 58287.6, "profit_2025": 70315.8, "profit_2026": 29669.19, "revenue_2024": 208198.84, "revenue_2025": 205582.74, "revenue_2026": 74560.99, "quantity_2024": 409327.0, "quantity_2025": 367371.0, "quantity_2026": 135516.0, "inventory_qty": 77410.0, "inventory_cost": 26463.64, "growth": 20.6}, {"name": "Zaryadka", "profit_2024": 36816.91, "profit_2025": 43408.27, "profit_2026": 25457.97, "revenue_2024": 126896.72, "revenue_2025": 119469.19, "revenue_2026": 60854.82, "quantity_2024": 91028.0, "quantity_2025": 77153.0, "quantity_2026": 34312.0, "inventory_qty": 21424.0, "inventory_cost": 23985.72, "growth": 17.9}, {"name": "Kalonka", "profit_2024": 3708.29, "profit_2025": 31178.18, "profit_2026": 21401.33, "revenue_2024": 15656.19, "revenue_2025": 114833.83, "revenue_2026": 77241.11, "quantity_2024": 132.0, "quantity_2025": 4643.0, "quantity_2026": 4413.0, "inventory_qty": 1018.0, "inventory_cost": 34329.51, "growth": 740.8}, {"name": "Bluetooth", "profit_2024": -0.71, "profit_2025": 22878.07, "profit_2026": 8298.41, "revenue_2024": -0.71, "revenue_2025": 84682.1, "revenue_2026": 29138.78, "quantity_2024": 0.0, "quantity_2025": 19345.0, "quantity_2026": 5560.0, "inventory_qty": 5628.0, "inventory_cost": 22089.2, "growth": 0.0}, {"name": "Avto Holder", "profit_2024": 16871.22, "profit_2025": 17873.9, "profit_2026": 17664.19, "revenue_2024": 57142.08, "revenue_2025": 52966.28, "revenue_2026": 43471.85, "quantity_2024": 37944.0, "quantity_2025": 35861.0, "quantity_2026": 22484.0, "inventory_qty": 10802.0, "inventory_cost": 14582.75, "growth": 5.9}, {"name": "Chexol", "profit_2024": 11658.01, "profit_2025": 14570.59, "profit_2026": -5021.87, "revenue_2024": 32821.99, "revenue_2025": 47006.41, "revenue_2026": 3000.37, "quantity_2024": 43019.0, "quantity_2025": 86141.0, "quantity_2026": 21297.0, "inventory_qty": 1663.0, "inventory_cost": 597.02, "growth": 25.0}, {"name": "Kovrik", "profit_2024": 3765.11, "profit_2025": 10337.5, "profit_2026": 6569.66, "revenue_2024": 9655.78, "revenue_2025": 25015.4, "revenue_2026": 15300.73, "quantity_2024": 11485.0, "quantity_2025": 14836.0, "quantity_2026": 10054.0, "inventory_qty": 4388.0, "inventory_cost": 6860.0, "growth": 174.6}, {"name": "Keyboard", "profit_2024": 7595.86, "profit_2025": 6964.75, "profit_2026": 7059.38, "revenue_2024": 25189.22, "revenue_2025": 19392.45, "revenue_2026": 15684.6, "quantity_2024": 3942.0, "quantity_2025": 3832.0, "quantity_2026": 4428.0, "inventory_qty": 5975.0, "inventory_cost": 17431.18, "growth": -8.3}, {"name": "Adapter", "profit_2024": 0.0, "profit_2025": 4964.52, "profit_2026": 59.83, "revenue_2024": 0.0, "revenue_2025": 9432.92, "revenue_2026": 108.43, "quantity_2024": 0.0, "quantity_2025": 20128.0, "quantity_2026": 219.0, "inventory_qty": 1.0, "inventory_cost": 0.22, "growth": 0.0}, {"name": "Mouse", "profit_2024": 940.12, "profit_2025": 3607.9, "profit_2026": 4744.73, "revenue_2024": 3740.03, "revenue_2025": 9995.54, "revenue_2026": 11592.96, "quantity_2024": 1167.0, "quantity_2025": 3646.0, "quantity_2026": 4950.0, "inventory_qty": 7748.0, "inventory_cost": 13670.74, "growth": 283.8}, {"name": "Naushnik", "profit_2024": 40.34, "profit_2025": 3382.35, "profit_2026": 9095.78, "revenue_2024": 664.48, "revenue_2025": 7861.83, "revenue_2026": 20754.65, "quantity_2024": 620.0, "quantity_2025": 5652.0, "quantity_2026": 17263.0, "inventory_qty": 7406.0, "inventory_cost": 5681.26, "growth": 8284.6}, {"name": "Ekran shisha", "profit_2024": 962.89, "profit_2025": 1749.13, "profit_2026": -116.97, "revenue_2024": 4364.26, "revenue_2025": 1802.54, "revenue_2026": -117.22, "quantity_2024": 23569.0, "quantity_2025": 53410.0, "quantity_2026": -253.0, "inventory_qty": 0.0, "inventory_cost": 0.0, "growth": 81.7}, {"name": "OTG", "profit_2024": 1291.87, "profit_2025": 1175.51, "profit_2026": 405.21, "revenue_2024": 2030.67, "revenue_2025": 1772.99, "revenue_2026": 577.19, "quantity_2024": 9102.0, "quantity_2025": 6480.0, "quantity_2026": 2012.0, "inventory_qty": 1412.0, "inventory_cost": 101.4, "growth": -9.0}, {"name": "Power Bank", "profit_2024": 2397.8, "profit_2025": 366.32, "profit_2026": 10291.04, "revenue_2024": 12316.59, "revenue_2025": 2007.86, "revenue_2026": 28128.63, "quantity_2024": 1267.0, "quantity_2025": 189.0, "quantity_2026": 3932.0, "inventory_qty": 345.0, "inventory_cost": 1613.65, "growth": -84.7}, {"name": "Phone Number", "profit_2024": 0.0, "profit_2025": 233.19, "profit_2026": 592.59, "revenue_2024": 0.0, "revenue_2025": 683.09, "revenue_2026": 1823.75, "quantity_2024": 0.0, "quantity_2025": 501.0, "quantity_2026": 1371.0, "inventory_qty": 111.0, "inventory_cost": 99.68, "growth": 0.0}, {"name": "Aux", "profit_2024": 88.7, "profit_2025": 8.61, "profit_2026": -0.5, "revenue_2024": 318.2, "revenue_2025": 26.11, "revenue_2026": 0.0, "quantity_2024": 459.0, "quantity_2025": 35.0, "quantity_2026": 1.0, "inventory_qty": 0.0, "inventory_cost": 0.0, "growth": -90.3}, {"name": "Mix", "profit_2024": 0.0, "profit_2025": 0.0, "profit_2026": -12.06, "revenue_2024": 0.0, "revenue_2025": 0.0, "revenue_2026": 0.0, "quantity_2024": 0.0, "quantity_2025": 0.0, "quantity_2026": 30.0, "inventory_qty": 2144.0, "inventory_cost": 3426.25, "growth": 0.0}, {"name": "Smart Watch", "profit_2024": 0.0, "profit_2025": 0.0, "profit_2026": 4558.87, "revenue_2024": 0.0, "revenue_2025": 0.0, "revenue_2026": 13135.33, "quantity_2024": 0.0, "quantity_2025": 0.0, "quantity_2026": 479.0, "inventory_qty": 850.0, "inventory_cost": 19471.21, "growth": 0.0}, {"name": "Svetilnik", "profit_2024": 10.33, "profit_2025": -23.19, "profit_2026": -1.45, "revenue_2024": 173.92, "revenue_2025": 44.97, "revenue_2026": 12.18, "quantity_2024": 12.0, "quantity_2025": 5.0, "quantity_2026": 1.0, "inventory_qty": 0.0, "inventory_cost": 0.0, "growth": -324.6}], "monthly": [{"month": "Январь 2024", "profit": 12594.076000000001, "revenue": 47840.509, "quantity": 69482.0}, {"month": "Февраль 2024", "profit": 10649.534, "revenue": 38182.073000000004, "quantity": 51880.0}, {"month": "Март 2024", "profit": 11142.1, "revenue": 39882.471999999994, "quantity": 55364.0}, {"month": "Апрель 2024", "profit": 9149.283, "revenue": 36783.507999999994, "quantity": 50306.0}, {"month": "Май 2024", "profit": 12157.849999999999, "revenue": 44249.132, "quantity": 54103.0}, {"month": "Июнь 2024", "profit": 11178.751, "revenue": 40341.557, "quantity": 52099.0}, {"month": "Июль 2024", "profit": 12318.184, "revenue": 41448.395000000004, "quantity": 50448.0}, {"month": "Август 2024", "profit": 12187.439, "revenue": 38341.831, "quantity": 50377.0}, {"month": "Сентябрь 2024", "profit": 15411.864, "revenue": 49678.721000000005, "quantity": 59593.0}, {"month": "Октябрь 2024", "profit": 12819.172999999999, "revenue": 41271.575000000004, "quantity": 48769.0}, {"month": "Ноябрь 2024", "profit": 12810.606, "revenue": 40758.989, "quantity": 47534.0}, {"month": "Декабрь 2024", "profit": 12015.476, "revenue": 40389.516, "quantity": 43118.0}, {"month": "Январь 2025", "profit": 16236.131000000001, "revenue": 48103.746, "quantity": 61647.0}, {"month": "Февраль 2025", "profit": 13752.596, "revenue": 41462.088, "quantity": 58818.0}, {"month": "Март 2025", "profit": 20031.33, "revenue": 61197.309, "quantity": 66977.0}, {"month": "Апрель 2025", "profit": 20080.131999999998, "revenue": 66909.466, "quantity": 65885.0}, {"month": "Май 2025", "profit": 14874.609, "revenue": 45288.57, "quantity": 50253.0}, {"month": "Июнь 2025", "profit": 15608.746, "revenue": 46922.065, "quantity": 51757.0}, {"month": "Июль 2025", "profit": 17127.555, "revenue": 49853.712, "quantity": 70721.0}, {"month": "Август 2025", "profit": 15972.805, "revenue": 48887.304000000004, "quantity": 51363.0}, {"month": "Сентябрь 2025", "profit": 21817.256, "revenue": 60568.265, "quantity": 59955.0}, {"month": "Октябрь 2025", "profit": 25537.34, "revenue": 70683.711, "quantity": 61473.0}, {"month": "Ноябрь 2025", "profit": 25403.749000000003, "revenue": 77274.59, "quantity": 49483.0}, {"month": "Декабрь 2025", "profit": 26549.156, "revenue": 85425.43599999999, "quantity": 50896.0}, {"month": "Январь 2026", "profit": 24637.970999999998, "revenue": 73368.449, "quantity": 56798.0}, {"month": "Февраль 2026", "profit": 25201.996, "revenue": 74520.43, "quantity": 51544.0}, {"month": "Март 2026", "profit": 31431.259999999995, "revenue": 91028.959, "quantity": 57440.0}, {"month": "Апрель 2026", "profit": 44589.022, "revenue": 116666.83300000001, "quantity": 77841.0}, {"month": "Май 2026", "profit": 14855.079, "revenue": 39684.479999999996, "quantity": 24446.0}], "inventory_total": {"quantity": 148325.0, "cost_value": 190403.43000000002}, "filials": [{"name": "55 Izza", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 110744.0, "sale": 125377.88, "cost": 82656.73, "profit": 42721.15}, "2026": {"quantity": 40581.0, "sale": 50296.8, "cost": 31777.75, "profit": 18519.05}, "growth_2025": 0, "margin_2025": 34.1}, {"name": "77 Termiz", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 69498.0, "sale": 65435.32, "cost": 43233.59, "profit": 22201.73}, "2026": {"quantity": 30637.0, "sale": 31472.59, "cost": 21716.24, "profit": 9756.35}, "growth_2025": 0, "margin_2025": 33.9}, {"name": "51 O'rikzor", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 67589.0, "sale": 64311.52, "cost": 41433.97, "profit": 22877.55}, "2026": {"quantity": 25225.0, "sale": 32164.27, "cost": 19589.64, "profit": 12574.63}, "growth_2025": 0, "margin_2025": 35.6}, {"name": "60 Andijon", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 57122.0, "sale": 57833.42, "cost": 36914.98, "profit": 20918.44}, "2026": {"quantity": 23270.0, "sale": 34439.66, "cost": 22839.63, "profit": 11600.04}, "growth_2025": 0, "margin_2025": 36.2}, {"name": "31 Samarqand", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 48538.0, "sale": 56757.23, "cost": 36591.26, "profit": 20165.98}, "2026": {"quantity": 22716.0, "sale": 28491.14, "cost": 18810.95, "profit": 9680.19}, "growth_2025": 0, "margin_2025": 35.5}, {"name": "90 Urganch", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 38055.0, "sale": 51165.96, "cost": 33073.48, "profit": 18092.48}, "2026": {"quantity": 22278.0, "sale": 25228.34, "cost": 17186.45, "profit": 8041.88}, "growth_2025": 0, "margin_2025": 35.4}, {"name": "80 Buxoro", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 40661.0, "sale": 49643.57, "cost": 31789.06, "profit": 17854.52}, "2026": {"quantity": 20486.0, "sale": 30292.96, "cost": 18772.08, "profit": 11520.88}, "growth_2025": 0, "margin_2025": 36.0}, {"name": "50 Namangan", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 72863.0, "sale": 36840.79, "cost": 23169.72, "profit": 13671.07}, "2026": {"quantity": -1181.0, "sale": 18131.34, "cost": 12126.12, "profit": 6005.23}, "growth_2025": 0, "margin_2025": 37.1}, {"name": "61 O'rikzor", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 35956.0, "sale": 35585.21, "cost": 23204.4, "profit": 12380.81}, "2026": {"quantity": 12742.0, "sale": 15797.32, "cost": 9812.68, "profit": 5984.64}, "growth_2025": 0, "margin_2025": 34.8}, {"name": "85 Navoiy", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 22941.0, "sale": 30322.85, "cost": 19827.08, "profit": 10495.77}, "2026": {"quantity": 11762.0, "sale": 27132.22, "cost": 17318.84, "profit": 9813.38}, "growth_2025": 0, "margin_2025": 34.6}, {"name": "70 Qarshi", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 31951.0, "sale": 29003.87, "cost": 17925.84, "profit": 11078.02}, "2026": {"quantity": 8304.0, "sale": 18563.99, "cost": 12430.14, "profit": 6133.84}, "growth_2025": 0, "margin_2025": 38.2}, {"name": "40 Qo'qon", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 22537.0, "sale": 27361.99, "cost": 17923.57, "profit": 9438.41}, "2026": {"quantity": 7091.0, "sale": 17912.51, "cost": 12182.39, "profit": 5730.12}, "growth_2025": 0, "margin_2025": 34.5}, {"name": "23 Distributsiya", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 16263.0, "sale": 16491.16, "cost": 10211.76, "profit": 6279.4}, "2026": {"quantity": 24009.0, "sale": 28622.5, "cost": 17010.27, "profit": 11612.23}, "growth_2025": 0, "margin_2025": 38.1}, {"name": "22 Distributsiya", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 2587.0, "sale": 2917.36, "cost": 1920.47, "profit": 996.89}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": 0, "margin_2025": 34.2}, {"name": "E1 Internet Magazin", "2024": {"quantity": 23.0, "sale": 194.7, "cost": 66.63, "profit": 128.07}, "2025": {"quantity": 265.0, "sale": 1191.2, "cost": 538.64, "profit": 652.56}, "2026": {"quantity": 1.0, "sale": 6.15, "cost": 2.23, "profit": 3.92}, "growth_2025": 511.8, "margin_2025": 54.8}, {"name": "E2 Internet Magazin", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 129.0, "sale": 1157.71, "cost": 419.28, "profit": 738.44}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": 0, "margin_2025": 63.8}, {"name": "44 O'rikzor", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 349.0, "sale": 576.92, "cost": 72.19, "profit": 504.73}, "2026": {"quantity": 32140.0, "sale": 52397.31, "cost": 34724.61, "profit": 17672.69}, "growth_2025": 0, "margin_2025": 87.5}, {"name": "22 Mobicom", "2024": {"quantity": 13174.0, "sale": 11262.9, "cost": 7703.85, "profit": 3559.06}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "23 Mobicom", "2024": {"quantity": 3230.0, "sale": 2195.24, "cost": 1424.19, "profit": 771.05}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "30 Mobicom Samarqand", "2024": {"quantity": 9865.0, "sale": 7344.48, "cost": 5085.93, "profit": 2258.55}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "31 Mobicom Samarqand", "2024": {"quantity": 22808.0, "sale": 18213.4, "cost": 12781.32, "profit": 5432.08}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "40 Mobicom Qo'qon", "2024": {"quantity": 31012.0, "sale": 26084.97, "cost": 17621.85, "profit": 8463.12}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "50 Mobicom Namangan", "2024": {"quantity": 27769.0, "sale": 19437.33, "cost": 13243.45, "profit": 6193.87}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "51 Oskar", "2024": {"quantity": 53341.0, "sale": 40318.09, "cost": 28466.25, "profit": 11851.84}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "55 Elite", "2024": {"quantity": 56603.0, "sale": 47039.51, "cost": 33375.87, "profit": 13663.64}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "60 Mobicom Andijon", "2024": {"quantity": 50439.0, "sale": 36940.33, "cost": 25643.3, "profit": 11297.03}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "61 Mobicom", "2024": {"quantity": 33002.0, "sale": 25393.22, "cost": 18137.32, "profit": 7255.89}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "64 Mobicom Case", "2024": {"quantity": 9632.0, "sale": 5993.66, "cost": 4224.39, "profit": 1769.27}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "66 Mobicom", "2024": {"quantity": 72960.0, "sale": 66050.91, "cost": 45613.11, "profit": 20437.81}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "70 Mobicom Qarshi", "2024": {"quantity": 16077.0, "sale": 9868.91, "cost": 6642.1, "profit": 3226.81}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "77 Mobicom Termiz", "2024": {"quantity": 63650.0, "sale": 41286.3, "cost": 29265.53, "profit": 12020.77}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "80 Mobicom Buxoro", "2024": {"quantity": 13378.0, "sale": 11325.12, "cost": 7824.47, "profit": 3500.65}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "85 Mobicom Navoiy", "2024": {"quantity": 3556.0, "sale": 2297.87, "cost": 1508.5, "profit": 789.38}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "90 Mobicom Urganch", "2024": {"quantity": 7299.0, "sale": 6369.47, "cost": 4211.2, "profit": 2158.27}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "E105 Oskar", "2024": {"quantity": 6878.0, "sale": 5944.7, "cost": 4371.97, "profit": 1572.73}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "growth_2025": -100.0, "margin_2025": 0}, {"name": "25 Abu Sahiy", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 200.0, "sale": 196.72, "cost": 153.0, "profit": 43.72}, "growth_2025": 0, "margin_2025": 0}, {"name": "95 Nukus", "2024": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2025": {"quantity": 0, "sale": 0, "cost": 0, "profit": 0}, "2026": {"quantity": 2822.0, "sale": 5415.59, "cost": 3410.13, "profit": 2005.46}, "growth_2025": 0, "margin_2025": 0}]};
+        const dashboardData = {};
 
         // ═══ ЗАГРУЗКА СОХРАНЁННЫХ ДАННЫХ ИЗ БРАУЗЕРА ═══
         // Если пользователь раньше загружал Excel - используем те данные
@@ -1584,6 +1501,78 @@
             console.error('Ошибка загрузки сохранённых данных:', e);
         }
 
+        // ═══ ПРОВЕРКА И ОТОБРАЖЕНИЕ ПУСТОГО СОСТОЯНИЯ ═══
+        const hasSalesData = !!(dashboardData && dashboardData.totals && dashboardData.categories?.length > 0);
+        const hasFilialsData = !!(dashboardData && dashboardData.filials?.length > 0);
+        const hasData = hasSalesData || hasFilialsData;
+
+        function checkAndShowEmptyState() {
+            const dashboardElement = document.querySelector('.dashboard');
+            
+            if (!hasData) {
+                // Нет данных - показываем приветственное сообщение
+                dashboardElement.style.display = 'none';
+                
+                // Создаём и показываем пустое состояние
+                let emptyState = document.getElementById('emptyStateMessage');
+                if (!emptyState) {
+                    emptyState = document.createElement('div');
+                    emptyState.id = 'emptyStateMessage';
+                    emptyState.style.cssText = `
+                        text-align: center;
+                        padding: 100px 20px;
+                        max-width: 600px;
+                        margin: 0 auto;
+                        color: var(--text-primary);
+                    `;
+                    emptyState.innerHTML = `
+                        <div style="font-size: 80px; margin-bottom: 30px;">📊</div>
+                        <h2 style="font-size: 2rem; margin-bottom: 20px; color: var(--accent-blue);">
+                            Добро пожаловать в Nillmax Stats
+                        </h2>
+                        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 30px;">
+                            Для начала работы загрузите ваш Excel-файл с данными продаж.<br>
+                            Нажмите кнопку <strong style="color: var(--accent-blue);">"Загрузить данные"</strong> в правом верхнем углу.
+                        </p>
+                        <div style="background: var(--bg-secondary); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color); margin-top: 30px;">
+                            <h3 style="font-size: 1.3rem; margin-bottom: 15px; color: var(--accent-gold);">
+                                ✨ Что вы сможете увидеть:
+                            </h3>
+                            <ul style="list-style: none; padding: 0; text-align: left; display: inline-block;">
+                                <li style="padding: 8px 0; font-size: 1rem;">📈 Анализ продаж по годам и месяцам</li>
+                                <li style="padding: 8px 0; font-size: 1rem;">💰 Прибыль, оборот и маржинальность</li>
+                                <li style="padding: 8px 0; font-size: 1rem;">🏪 Статистика по филиалам</li>
+                                <li style="padding: 8px 0; font-size: 1rem;">📦 Товарные категории и остатки</li>
+                                <li style="padding: 8px 0; font-size: 1rem;">🎯 План продаж и выполнение</li>
+                            </ul>
+                        </div>
+                        <p style="margin-top: 40px; color: var(--text-secondary); font-size: 0.9rem;">
+                            💡 Все данные обрабатываются локально в вашем браузере и не отправляются на сервер
+                        </p>
+                    `;
+                    document.querySelector('.dashboard').parentElement.appendChild(emptyState);
+                }
+                emptyState.style.display = 'block';
+            } else {
+                // Есть данные - показываем dashboard
+                dashboardElement.style.display = 'block';
+                const emptyState = document.getElementById('emptyStateMessage');
+                if (emptyState) {
+                    emptyState.style.display = 'none';
+                }
+                
+                // Настраиваем видимость разделов
+                document.getElementById('kpiYearsContainer').style.display = hasSalesData ? 'flex' : 'none';
+                document.getElementById('salesChartsGrid1').style.display = hasSalesData ? 'grid' : 'none';
+                document.getElementById('salesChartsGrid2').style.display = hasSalesData ? 'grid' : 'none';
+                document.getElementById('salesCategoriesSection').style.display = hasSalesData ? 'block' : 'none';
+                document.getElementById('filialsSection').style.display = hasFilialsData ? 'block' : 'none';
+            }
+        }
+
+        // Вызываем проверку при загрузке страницы
+        checkAndShowEmptyState();
+
         function formatCurrency(value) {
             return new Intl.NumberFormat('ru-RU', {
                 minimumFractionDigits: 0,
@@ -1595,42 +1584,81 @@
             return new Intl.NumberFormat('ru-RU').format(Math.round(value));
         }
 
-        // Update KPIs safely (only if elements exist in the DOM)
-        const elRev2025 = document.getElementById('kpi-revenue-2025');
-        if (elRev2025) elRev2025.innerHTML = '$' + formatCurrency(dashboardData.totals.revenue['2025']);
-        
-        const elProf2025 = document.getElementById('kpi-profit-2025');
-        if (elProf2025) elProf2025.innerHTML = '$' + formatCurrency(dashboardData.totals.profit['2025']);
-        
-        const elCost2025 = document.getElementById('kpi-cost-2025');
-        if (elCost2025) elCost2025.innerHTML = '$' + formatCurrency(dashboardData.totals.cost['2025']);
-        
-        const elQty2025 = document.getElementById('kpi-quantity-2025');
-        if (elQty2025) elQty2025.textContent = formatNumber(dashboardData.totals.quantity['2025']);
-        
-        const elRev2026 = document.getElementById('kpi-revenue-2026');
-        if (elRev2026) elRev2026.innerHTML = '$' + formatCurrency(dashboardData.totals.revenue['2026']);
-        
-        const elProf2026 = document.getElementById('kpi-profit-2026');
-        if (elProf2026) elProf2026.innerHTML = '$' + formatCurrency(dashboardData.totals.profit['2026']);
-        
-        const elInvQty = document.getElementById('kpi-inventory-qty');
-        if (elInvQty) elInvQty.textContent = formatNumber(dashboardData.inventory_total.quantity);
-        
-        const elInvCost = document.getElementById('kpi-inventory-cost');
-        if (elInvCost) elInvCost.innerHTML = '$' + formatCurrency(dashboardData.inventory_total.cost_value);
+        function renderYearlyKpis() {
+            if (!hasSalesData) return;
+            
+            let html = '';
+            const years = Object.keys(dashboardData.totals.revenue).sort();
+            
+            years.forEach(year => {
+                const rev = dashboardData.totals.revenue[year] || 0;
+                const prof = dashboardData.totals.profit[year] || 0;
+                const cost = dashboardData.totals.cost[year] || 0;
+                const qty = dashboardData.totals.quantity[year] || 0;
+                
+                const margin = rev > 0 ? ((prof / rev) * 100).toFixed(1) : '0.0';
+                
+                let changeRevHtml = '';
+                let changeProfHtml = '';
+                let changeQtyHtml = '';
+                
+                const prevYear = String(Number(year) - 1);
+                if (dashboardData.totals.revenue[prevYear]) {
+                    const prevRev = dashboardData.totals.revenue[prevYear] || 0;
+                    const prevProf = dashboardData.totals.profit[prevYear] || 0;
+                    const prevQty = dashboardData.totals.quantity[prevYear] || 0;
+                    
+                    const revGrowth = prevRev > 0 ? ((rev / prevRev - 1) * 100).toFixed(1) : '0.0';
+                    const profGrowth = prevProf > 0 ? ((prof / prevProf - 1) * 100).toFixed(1) : '0.0';
+                    const qtyGrowth = prevQty > 0 ? ((qty / prevQty - 1) * 100).toFixed(1) : '0.0';
+                    
+                    changeRevHtml = `<div class="kpi-change ${parseFloat(revGrowth) >= 0 ? 'positive' : 'negative'}">${parseFloat(revGrowth) >= 0 ? '+' : ''}${revGrowth}% vs ${prevYear}</div>`;
+                    changeProfHtml = `<div class="kpi-change ${parseFloat(profGrowth) >= 0 ? 'positive' : 'negative'}">${parseFloat(profGrowth) >= 0 ? '+' : ''}${profGrowth}% vs ${prevYear}</div>`;
+                    changeQtyHtml = `<div class="kpi-change ${parseFloat(qtyGrowth) >= 0 ? 'positive' : 'negative'}">${parseFloat(qtyGrowth) >= 0 ? '+' : ''}${qtyGrowth}% vs ${prevYear}</div>`;
+                } else {
+                    changeRevHtml = `<div class="kpi-change positive">Полный год</div>`;
+                    changeProfHtml = `<div class="kpi-change">${margin}% маржа</div>`;
+                    changeQtyHtml = `<div class="kpi-change neutral">шт</div>`;
+                }
+                
+                html += `
+                    <div class="year-section">
+                        <h2 class="year-title">${year} год ${year === '2026' ? '<span style="font-size: 0.7em; font-weight: 400;">(Январь-Май)</span>' : ''}</h2>
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Оборот ${year}</div>
+                                <div class="kpi-value">$${formatCurrency(rev)}</div>
+                                ${changeRevHtml}
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Прибыль ${year}</div>
+                                <div class="kpi-value">$${formatCurrency(prof)}</div>
+                                ${changeProfHtml}
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Себестоимость ${year}</div>
+                                <div class="kpi-value">$${formatCurrency(cost)}</div>
+                                <div class="kpi-change neutral">Затраты на товары</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Продано штук ${year}</div>
+                                <div class="kpi-value">${formatNumber(qty)}</div>
+                                ${changeQtyHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            const container = document.getElementById('kpiYearsContainer');
+            if (container) {
+                container.innerHTML = html;
+            }
+        }
 
-        const elRevGrowth = document.getElementById('revenue-growth');
-        if (elRevGrowth) {
-            const revenueGrowth = ((dashboardData.totals.revenue['2025'] / dashboardData.totals.revenue['2024'] - 1) * 100).toFixed(1);
-            elRevGrowth.textContent = `+${revenueGrowth}% vs 2024`;
-        }
-        
-        const elProfGrowth = document.getElementById('profit-growth');
-        if (elProfGrowth) {
-            const profitGrowth = ((dashboardData.totals.profit['2025'] / dashboardData.totals.profit['2024'] - 1) * 100).toFixed(1);
-            elProfGrowth.textContent = `+${profitGrowth}% vs 2024`;
-        }
+        if (hasSalesData) {
+            // Рендерим KPI по годам динамически
+            renderYearlyKpis();
 
         // Chart defaults
         Chart.defaults.color = '#98a3b3';
@@ -1947,6 +1975,7 @@
                 </td>
             </tr>
         `).join('');
+        }
     
     
     // ═══ ПЕРЕКЛЮЧЕНИЕ ТЕМ ═══
@@ -2008,19 +2037,19 @@
         // Берём топ-10 (исключая "Общий итог" если есть)
         const filteredFilials = filials.filter(f => 
             f.name.toLowerCase() !== 'общий итог' && 
-            f['2025'].sale > 0
+            f['2025']?.sale > 0
         );
         const top10 = filteredFilials.slice(0, 10);
         
         // Общая сумма по всем филиалам 2025
-        const totalSales2025 = filteredFilials.reduce((sum, f) => sum + f['2025'].sale, 0);
-        const top10Sales = top10.reduce((sum, f) => sum + f['2025'].sale, 0);
-        const top10Profit = top10.reduce((sum, f) => sum + (f['2025'].profit || 0), 0);
+        const totalSales2025 = filteredFilials.reduce((sum, f) => sum + (f['2025']?.sale || 0), 0);
+        const top10Sales = top10.reduce((sum, f) => sum + (f['2025']?.sale || 0), 0);
+        const top10Profit = top10.reduce((sum, f) => sum + (f['2025']?.profit || 0), 0);
         
         // KPI карточки
         document.getElementById('kpi-total-filials').textContent = filteredFilials.length;
         document.getElementById('kpi-top-filial').textContent = top10[0]?.name || '—';
-        document.getElementById('kpi-top-filial-sale').textContent = '$' + (top10[0]?.['2025'].sale || 0).toLocaleString('en-US', {maximumFractionDigits: 0});
+        document.getElementById('kpi-top-filial-sale').textContent = '$' + (top10[0]?.['2025']?.sale || 0).toLocaleString('en-US', {maximumFractionDigits: 0});
         document.getElementById('kpi-top10-sales').textContent = '$' + top10Sales.toLocaleString('en-US', {maximumFractionDigits: 0});
         document.getElementById('kpi-top10-percent').textContent = 
             totalSales2025 > 0 ? ((top10Sales / totalSales2025) * 100).toFixed(1) + '% от общего' : '—';
@@ -2035,7 +2064,7 @@
                 labels: top10.map(f => f.name),
                 datasets: [{
                     label: 'Продажи 2025 ($)',
-                    data: top10.map(f => f['2025'].sale),
+                    data: top10.map(f => f['2025']?.sale || 0),
                     backgroundColor: [
                         '#ffd700', '#c0c0c0', '#cd7f32',
                         'rgba(0, 255, 163, 0.7)', 'rgba(0, 255, 163, 0.6)',
@@ -2075,9 +2104,9 @@
             data: {
                 labels: top10.map(f => f.name),
                 datasets: [
-                    { label: '2024', data: top10.map(f => f['2024'].sale), backgroundColor: 'rgba(153, 102, 255, 0.7)' },
-                    { label: '2025', data: top10.map(f => f['2025'].sale), backgroundColor: 'rgba(0, 255, 163, 0.7)' },
-                    { label: '2026', data: top10.map(f => f['2026'].sale), backgroundColor: 'rgba(0, 153, 255, 0.7)' }
+                    { label: '2024', data: top10.map(f => f['2024']?.sale || 0), backgroundColor: 'rgba(153, 102, 255, 0.7)' },
+                    { label: '2025', data: top10.map(f => f['2025']?.sale || 0), backgroundColor: 'rgba(0, 255, 163, 0.7)' },
+                    { label: '2026', data: top10.map(f => f['2026']?.sale || 0), backgroundColor: 'rgba(0, 153, 255, 0.7)' }
                 ]
             },
             options: {
@@ -2107,7 +2136,7 @@
                 labels: top10.map(f => f.name),
                 datasets: [{
                     label: 'Прибыль 2025 ($)',
-                    data: top10.map(f => f['2025'].profit || 0),
+                    data: top10.map(f => f['2025']?.profit || 0),
                     backgroundColor: 'rgba(0, 255, 163, 0.7)',
                     borderColor: '#00ffa3',
                     borderWidth: 1
@@ -2184,10 +2213,10 @@
                 <tr>
                     <td><span class="rank-badge ${rankClass}">${rank}</span></td>
                     <td><strong>${f.name}</strong></td>
-                    <td>$${(f['2024'].sale).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                    <td><strong>$${(f['2025'].sale).toLocaleString('en-US', {maximumFractionDigits: 0})}</strong></td>
-                    <td>$${(f['2026'].sale).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                    <td style="color: var(--accent-green);">$${(f['2025'].profit || 0).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                    <td>$${(f['2024']?.sale || 0).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                    <td><strong>$${(f['2025']?.sale || 0).toLocaleString('en-US', {maximumFractionDigits: 0})}</strong></td>
+                    <td>$${(f['2026']?.sale || 0).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                    <td style="color: var(--accent-green);">$${(f['2025']?.profit || 0).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
                     <td>${(f.margin_2025 || 0).toFixed(1)}%</td>
                     <td style="color: ${growthColor}; font-weight: 600;">${f.growth_2025 ? growthSign + f.growth_2025.toFixed(1) + '%' : '—'}</td>
                 </tr>
@@ -2197,9 +2226,11 @@
     
     // Запускаем рендеринг филиалов после загрузки страницы
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', renderFilialsSection);
+        document.addEventListener('DOMContentLoaded', () => {
+            if (hasFilialsData) renderFilialsSection();
+        });
     } else {
-        renderFilialsSection();
+        if (hasFilialsData) renderFilialsSection();
     }
 
     // ═══ ФУНКЦИОНАЛ ЗАГРУЗКИ EXCEL ФАЙЛОВ ═══
