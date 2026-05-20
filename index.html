@@ -1233,13 +1233,13 @@
             <div class="upload-status" id="uploadStatus"></div>
             
             <div class="upload-actions">
-                <a href="Шаблон_Анализ_продаж.xlsx" download class="btn-template">
+                <a href="#" id="downloadSalesTemplate" class="btn-template">
                     📋 Шаблон Продажи
                 </a>
-                <a href="Шаблон_Остатки.xlsx" download class="btn-template">
+                <a href="#" id="downloadInventoryTemplate" class="btn-template">
                     📦 Шаблон Остатки
                 </a>
-                <a href="Шаблон_Филиалы.xlsx" download class="btn-template">
+                <a href="#" id="downloadFilialsTemplate" class="btn-template">
                     🏪 Шаблон Филиалы
                 </a>
             </div>
@@ -2886,6 +2886,31 @@
                 createAndDownloadTemplate();
             };
         }
+
+        // Привязываем обработчики для скачивания основных шаблонов
+        const salesLink = document.getElementById('downloadSalesTemplate');
+        if (salesLink) {
+            salesLink.onclick = (e) => {
+                e.preventDefault();
+                createAndDownloadSalesTemplate();
+            };
+        }
+
+        const invLink = document.getElementById('downloadInventoryTemplate');
+        if (invLink) {
+            invLink.onclick = (e) => {
+                e.preventDefault();
+                createAndDownloadInventoryTemplate();
+            };
+        }
+
+        const filialsLink = document.getElementById('downloadFilialsTemplate');
+        if (filialsLink) {
+            filialsLink.onclick = (e) => {
+                e.preventDefault();
+                createAndDownloadFilialsTemplate();
+            };
+        }
     }
     
     // Инициализируем при первой загрузке страницы
@@ -2992,6 +3017,123 @@
         XLSX.writeFile(wb, 'Шаблон_План_продаж.xlsx');
         
         showPlanNotification('📥 Шаблон успешно скачан!', 'success');
+    }
+
+    // Динамическая генерация Шаблона Продаж
+    function createAndDownloadSalesTemplate() {
+        const monthsRu = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+        const years = ['2024', '2025', '2026'];
+        
+        const r0 = ['Категория: Товарные группы и товары компании Nillmax'];
+        const r1 = ['Категория: Товарные группы, 4. Анализ 2024-2026, Периодичность = 3 года (Количество, Оборот, Прибыль)'];
+        
+        const r2 = ['Категория', 'Название товара'];
+        years.forEach(year => {
+            monthsRu.forEach(month => {
+                r2.push(`${month} (${year}) - Количество`);
+                r2.push(`${month} (${year}) - Сумма оборота`);
+                r2.push(`${month} (${year}) - Валовая прибыль`);
+            });
+        });
+        
+        const templateData = [r0, r1, r2];
+        
+        const sampleItems = [
+            { cat: 'Zaryadka', name: 'Zaryadka Nillmax NM618 USB/PD Type-C Diamond' },
+            { cat: 'Chexol', name: 'Chexol Prozrachniy Nillmax CH0537' },
+            { cat: 'Kalonka', name: 'Kalonka Subwoofer NILLMAX NBK105' },
+            { cat: 'Aux', name: 'Aux Nillmax NM76' }
+        ];
+        
+        sampleItems.forEach(item => {
+            const row = [item.cat, item.name];
+            years.forEach(year => {
+                monthsRu.forEach(month => {
+                    const qty = 50 + Math.floor(Math.random() * 100);
+                    const rev = qty * (item.cat === 'Kalonka' ? 25 : item.cat === 'Zaryadka' ? 5 : 1.5);
+                    const profit = rev * 0.4;
+                    row.push(qty, Math.round(rev * 100) / 100, Math.round(profit * 100) / 100);
+                });
+            });
+            templateData.push(row);
+        });
+        
+        const ws = XLSX.utils.aoa_to_sheet(templateData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Анализ');
+        
+        XLSX.writeFile(wb, 'Шаблон_Анализ_продаж.xlsx');
+        showPlanNotification('📥 Шаблон продаж успешно скачан!', 'success');
+    }
+
+    // Динамическая генерация Шаблона Остатков
+    function createAndDownloadInventoryTemplate() {
+        const r0 = [];
+        const r1 = [null, 12200, null, null, null, null, null, null];
+        const r2 = [null, 'Артикул', 'Название товара', 'Бренд', 'Категория', 'Активный', 'Остаток', 'COST'];
+        
+        const templateData = [
+            r0, r1, r2,
+            [null, 'ZR1925', 'Zaryadka Nillmax NM618 USB/PD Type-C Diamond', 'Nillmax', 'Zaryadka', 'No', 75, 1.111],
+            [null, 'CH0537', 'Chexol Prozrachniy Nillmax CH0537', 'Nillmax', 'Chexol', 'No', 120, 0.45],
+            [null, 'KL105', 'Kalonka Subwoofer NILLMAX NBK105', 'Nillmax', 'Kalonka', 'No', 15, 12.50],
+            [null, 'NM76', 'Aux Nillmax NM76', 'Nillmax', 'Aux', 'No', 45, 0.65]
+        ];
+        
+        const ws = XLSX.utils.aoa_to_sheet(templateData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Лист1');
+        
+        XLSX.writeFile(wb, 'Шаблон_Остатки.xlsx');
+        showPlanNotification('📥 Шаблон остатков успешно скачан!', 'success');
+    }
+
+    // Динамическая генерация Шаблона Филиалов
+    function createAndDownloadFilialsTemplate() {
+        const monthsYanvar = ['01 Yanvar', '02 Fevral', '03 Mart', '04 Aprel', '05 May', '06 Iyun', '07 Iyul', '08 Avgust', '09 Sentyabr', '10 Oktyabr', '11 Noyabr', '12 Dekabr'];
+        const branches = ['22 Distributsiya', '30 Samarqand', "40 Qo'qon", '50 Namangan'];
+        
+        const templateData = [[]]; // Row 0 empty
+        
+        const addYearBlock = (year) => {
+            const rYear = [null, year];
+            monthsYanvar.forEach(m => {
+                rYear.push(m, null, null, null);
+            });
+            templateData.push(rYear);
+            
+            const rHeaders = [null, 'Filials'];
+            for (let m = 0; m < 12; m++) {
+                rHeaders.push('Количество', 'Продажи $ Sale', 'Себестоимость $ Cost', 'Прибыль $ Gross profit');
+            }
+            templateData.push(rHeaders);
+            
+            branches.forEach(b => {
+                const rBranch = [null, b];
+                for (let m = 0; m < 12; m++) {
+                    const qty = 500 + Math.floor(Math.random() * 200);
+                    const sale = qty * 1.5;
+                    const cost = sale * 0.6;
+                    const profit = sale - cost;
+                    rBranch.push(qty, Math.round(sale * 100) / 100, Math.round(cost * 100) / 100, Math.round(profit * 100) / 100);
+                }
+                templateData.push(rBranch);
+            });
+            
+            // Пустая строка между годами
+            templateData.push([]);
+        };
+        
+        addYearBlock(2024);
+        addYearBlock(2025);
+        addYearBlock(2026);
+        
+        const ws = XLSX.utils.aoa_to_sheet(templateData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Лист1');
+        
+        XLSX.writeFile(wb, 'Шаблон_Филиалы.xlsx');
+        showPlanNotification('📥 Шаблон филиалов успешно скачан!', 'success');
     }
     
     // Парсинг данных из Excel - УЛУЧШЕННАЯ ВЕРСИЯ С ЛОГИРОВАНИЕМ
