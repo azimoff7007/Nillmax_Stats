@@ -1,181 +1,749 @@
-// Настройки темы презентации (в стиле Nillmax Dash)
-#set page(
-  paper: "presentation-16-9",
-  fill: rgb("#0a0e14"), // Темный фон из оригинального HTML дашборда
-  margin: (x: 2cm, y: 1.5cm)
-)
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nillmax — Аналитика продаж</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<style>
+  :root{
+    --bg:#0a0e14;
+    --bg2:#0e131c;
+    --card:#121a26;
+    --card2:#15202f;
+    --line:#1f2b3d;
+    --txt:#e8eef7;
+    --muted:#7d8da3;
+    --amber:#ffb454;
+    --amber-soft:rgba(255,180,84,.14);
+    --teal:#3dd7c4;
+    --teal-soft:rgba(61,215,196,.14);
+    --violet:#9b8cff;
+    --rose:#ff7a8a;
+    --grid:rgba(125,141,163,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Manrope',sans-serif;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(255,180,84,.08), transparent 60%),
+      radial-gradient(900px 500px at 5% 5%, rgba(61,215,196,.07), transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    min-height:100vh;
+    padding:clamp(18px,4vw,56px);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .grain{position:fixed;inset:0;pointer-events:none;opacity:.025;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .wrap{max-width:1280px;margin:0 auto;position:relative;z-index:1}
 
-// Настройка стандартных шрифтов и цветов текста
-#set text(
-  font: "Manrope", 
-  fill: rgb("#e2e8f0"), 
-  size: 20pt
-)
+  /* HEADER */
+  header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;
+    padding-bottom:26px;border-bottom:1px solid var(--line);margin-bottom:34px}
+  .brand-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--amber);margin-bottom:14px;
+    display:flex;align-items:center;gap:9px}
+  .brand-tag::before{content:"";width:26px;height:1px;background:var(--amber)}
+  h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+    font-size:clamp(30px,5.5vw,56px);line-height:.98;letter-spacing:-.02em}
+  h1 .accent{color:var(--amber)}
+  .subtitle{color:var(--muted);font-size:15px;margin-top:12px;max-width:440px}
+  .period{text-align:right;font-family:'JetBrains Mono',monospace}
+  .period .lbl{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .period .val{font-size:18px;color:var(--txt);margin-top:5px;font-weight:700}
 
-// Стили заголовков с исправленной логикой
-#show heading: it => block(bottom: 1em)[
-  #set text(
-    fill: rgb("#ffffff"), 
-    weight: "bold", 
-    font: "Bricolage Grotesque",
-    size: if it.level == 1 { 32pt } else { 24pt }
-  )
-  #it.body
-  #v(2pt)
-  #line(length: 100%, stroke: 1pt + rgb("#1f2937"))
-]
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px}
+  .kpi{background:linear-gradient(160deg,var(--card2),var(--card));
+    border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;
+    position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s}
+  .kpi:hover{transform:translateY(-4px);border-color:#2b3a52}
+  .kpi::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:var(--accent,var(--amber));opacity:.85}
+  .kpi .ico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:var(--accent-soft);color:var(--accent);margin-bottom:16px}
+  .kpi .ico svg{width:18px;height:18px}
+  .kpi .k-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .kpi .k-val{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:clamp(24px,3vw,33px);margin-top:6px;letter-spacing:-.01em}
+  .kpi .k-sub{font-size:12.5px;margin-top:8px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+  .kpi .up{color:var(--teal)} .kpi .down{color:var(--rose)}
 
-// Кастомная функция для создания карточек показателей
-#let metric-card(title, value, color: rgb("#3b82f6")) = block(
-  fill: rgb("#121a26"),
-  inset: 15pt,
-  radius: 8pt,
-  stroke: 1pt + rgb("#1d283a"),
-  width: 100%,
-  [
-    #text(size: 13pt, fill: rgb("#94a3b8"), weight: "medium")[#title]
-    #v(5pt)
-    #text(size: 22pt, fill: color, weight: "bold")[#value]
-  ]
-)
+  /* CHART GRID */
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .panel{background:linear-gradient(170deg,var(--card2),var(--card));
+    border:1px solid var(--line);border-radius:18px;padding:22px 22px 16px;
+    display:flex;flex-direction:column}
+  .span12{grid-column:span 12} .span8{grid-column:span 8}
+  .span6{grid-column:span 6} .span4{grid-column:span 4}
+  .p-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+  .p-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.01em}
+  .p-desc{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+    font-family:'JetBrains Mono',monospace}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .dot{width:9px;height:9px;border-radius:3px;display:inline-block}
+  .chart-box{position:relative;flex:1;margin-top:14px}
+  .h-xl{height:440px} .h-lg{height:380px} .h-tall{height:330px} .h-mid{height:280px} .h-sm{height:250px}
 
-// Кастомная функция для прогресс-бара маржинальности (диаграммы)
-#let progress-bar(percentage, color: rgb("#10b981")) = block(width: 100%)[
-  #box(width: 100%, height: 8pt, fill: rgb("#1f2937"), radius: 4pt)[
-    #place(left)[
-      #box(width: percentage, height: 8pt, fill: color, radius: 4pt)
-    ]
-  ]
-]
+  /* FILTER BAR — floating top-right */
+  .filter{position:fixed;top:16px;right:16px;z-index:60;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    padding:8px 12px;border-radius:999px;
+    background:rgba(13,18,27,.72);
+    backdrop-filter:blur(16px) saturate(150%);
+    -webkit-backdrop-filter:blur(16px) saturate(150%);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 14px 40px -12px rgba(0,0,0,.7)}
+  .filter .f-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);margin:0 2px}
+  .pill{font-family:'Manrope',sans-serif;font-weight:700;font-size:13.5px;
+    padding:7px 16px;border-radius:999px;cursor:pointer;
+    background:rgba(255,255,255,.04);color:var(--muted);border:1px solid transparent;
+    transition:all .25s cubic-bezier(.2,.8,.2,1)}
+  .pill:hover{color:var(--txt);background:rgba(255,255,255,.09)}
+  .pill.active{background:var(--amber);color:#1a1205;border-color:var(--amber);
+    box-shadow:0 6px 20px -6px rgba(255,180,84,.6)}
+  .lang-switch{display:flex;gap:2px;background:rgba(255,255,255,.05);border-radius:999px;padding:3px}
+  .lang-btn{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.05em;
+    padding:6px 11px;border-radius:999px;cursor:pointer;border:none;background:transparent;
+    color:var(--muted);transition:all .2s}
+  .lang-btn:hover{color:var(--txt)}
+  .lang-btn.active{background:var(--teal);color:#06231f}
+  .f-divider{width:1px;height:22px;background:rgba(255,255,255,.12);margin:0 3px}
+  @media(max-width:620px){
+    body{padding-top:66px}
+    .filter{top:10px;left:10px;right:10px;justify-content:center;padding:7px 8px}
+    .filter .f-lbl{display:none}
+    .pill{padding:7px 13px;font-size:13px}
+  }
 
-// --- СЛАЙД 1: Титульный экран ---
-#page(fill: rgb("#0e131c"))[
-  #align(center + horizon)[
-    #block(
-      fill: rgb("#121a26"),
-      inset: 40pt,
-      radius: 12pt,
-      stroke: 2pt + rgb("#00ccff"),
-      [
-        #text(size: 16pt, fill: rgb("#00ccff"), weight: "bold", tracking: 2pt)[АНАЛИТИКА ПРОДАЖ]
-        #v(10pt)
-        #text(size: 42pt, fill: white, weight: "extrabold")[Nillmax Business Dashboard]
-        #v(15pt)
-        #text(size: 16pt, fill: rgb("#94a3b8"))[Демонстрационный отчет KPI (Данные изменены)]
-        #v(30pt)
-        #line(length: 40%, stroke: 2pt + rgb("#00ccff"))
-        #v(10pt)
-        #text(size: 12pt, fill: rgb("#64748b"))[Официальная презентация с анонимизированными показателями]
-      ]
-    )
-  ]
-]
+  footer{margin-top:36px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    color:var(--muted);font-size:12.5px;font-family:'JetBrains Mono',monospace}
 
-// --- СЛАЙД 2: Общие итоги (ВСЕ ЦИФРЫ УМЕНЬШЕНЫ В 10 РАЗ) ---
-#heading(level: 1)[Сводные показатели за весь период]
+  @media(max-width:980px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .span8,.span6,.span4{grid-column:span 12}
+  }
+  @media(max-width:560px){
+    .kpis{grid-template-columns:1fr}
+    header{align-items:flex-start} .period{text-align:left}
+  }
 
-#v(10pt)
-Консолидированные измененные показатели коммерческой деятельности Nillmax:
+  #branchSelect{
+    padding:10px 14px;
+    border-radius:10px;
+    background:var(--card2);
+    border:1px solid var(--line);
+    color:var(--txt);
+    font-family:inherit;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    outline:none;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  #branchSelect:focus{
+    border-color:var(--teal);
+    box-shadow:0 0 0 3px rgba(61,215,196,.15);
+  }
 
-#v(15pt)
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 20pt,
-  // Было ~8.9 млн -> Стало 896.1 тыс.
-  metric-card("Общая выручка (Savdo summa)", "896,163.00 USD", color: rgb("#00ccff")),
-  // Было ~2.8 млн -> Стало 286.8 тыс.
-  metric-card("Валовая прибыль (Yalpi foyda)", "286,851.00 USD", color: rgb("#10b981")),
-  // Было ~6.0 млн -> Стало 609.3 тыс.
-  metric-card("Себестоимость (Cost Sotuv)", "609,312.00 USD", color: rgb("#ef4444")),
-  // Было ~92 тыс. шт -> Стало 9.2 тыс. шт
-  metric-card("Общее кол-во продаж (Savdo soni)", "9,252.9 ед.", color: rgb("#f59e0b"))
-)
+  </style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="wrap">
 
-#v(20pt)
-#block(
-  fill: rgb("#15202f"),
-  inset: 12pt,
-  radius: 6pt,
-  width: 100%,
-  stroke: (left: 4pt + rgb("#10b981")),
-  [
-    #text(size: 14pt, weight: "bold", fill: white)[Средняя маржинальность бизнеса (проценты сохранены): 32.0%]
-    #v(5pt)
-    #progress-bar(32%)
-  ]
-)
+  <header>
+    <div>
+      <div class="brand-tag" data-i18n="brand">Аналитика продаж · Дашборд</div>
+      <h1><span class="accent">Nillmax</span></h1>
+      <p class="subtitle" data-i18n="subtitle">Динамика продаж чехлов и защитных стёкол: выручка, прибыль, остатки и маржинальность по месяцам.</p>
+    </div>
+  </header>
 
-// --- СЛАЙД 3: Погодовая динамика (ВСЕ ЦИФРЫ И ТРЕНДЫ УМЕНЬШЕНЫ В 10 РАЗ) ---
-#heading(level: 1)[Динамика продаж по годам (Данные изменены)]
+  <section class="filter" id="filter">
+    <div class="lang-switch" id="langSwitch">
+      <button class="lang-btn active" data-lang="ru">RU</button>
+      <button class="lang-btn" data-lang="uz">UZ</button>
+    </div>
+    <span class="f-divider"></span>
+    <span class="f-lbl" data-i18n="period">Период</span>
+    <button class="pill active" data-year="all" data-i18n="all">Все</button>
+    <button class="pill" data-year="2023">2023</button>
+    <button class="pill" data-year="2024">2024</button>
+    <button class="pill" data-year="2025">2025</button>
+    <button class="pill" data-year="2026">2026</button>
+  </section>
 
-#v(10pt)
-#set text(size: 13pt)
-#table(
-  columns: (1fr, 1.2fr, 1.5fr, 1.5fr, 1.5fr, 1fr),
-  inset: 12pt,
-  align: (center, center, right, right, right, center),
-  stroke: (x, y) => if y == 0 { (bottom: 2pt + rgb("#00ccff")) } else { 1pt + rgb("#1e293b") },
-  fill: (x, y) => if y == 0 { rgb("#121a26") } else if calc.even(y) { rgb("#0e131c") } else { rgb("#0a0e14") },
-  
-  // Заголовки таблицы
-  text(weight: "bold", fill: white)[Год],
-  text(weight: "bold", fill: white)[Кол-во (ед.)],
-  text(weight: "bold", fill: white)[Выручка],
-  text(weight: "bold", fill: white)[Себестоимость],
-  text(weight: "bold", fill: white)[Прибыль],
-  text(weight: "bold", fill: white)[Маржа],
+  <section class="kpis" id="kpis"></section>
 
-  // Все исходные миллионы и тысячи уменьшены ровно в 10 раз. Рост тренда наглядно виден.
-  [2023], [1,081.8], [71,186.0], [52,927.0], [18,259.0], text(fill: rgb("#10b981"), weight: "bold")[25.7%],
-  [2024], [3,165.3], [249,584.0], [177,367.0], [72,217.0], text(fill: rgb("#10b981"), weight: "bold")[28.9%],
-  [2025], [3,496.1], [351,288.0], [234,792.0], [116,496.0], text(fill: rgb("#10b981"), weight: "bold")[33.2%],
-  [2026], [1,509.5], [224,105.0], [144,225.0], [79,880.0], text(fill: rgb("#10b981"), weight: "bold")[35.6%],
-)
+  <section class="grid">
+    <div class="panel span12">
+      <div class="p-head">
+        <div>
+          <div class="p-title" data-i18n="revTitle">Выручка и валовая прибыль</div>
+          <div class="p-desc" data-i18n="revDesc">Помесячная динамика</div>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--amber)"></i><span data-i18n="revenue">Выручка</span></span>
+          <span><i class="dot" style="background:var(--teal)"></i><span data-i18n="profit">Прибыль</span></span>
+        </div>
+      </div>
+      <div class="chart-box h-xl"><canvas id="cRevenue"></canvas></div>
+    </div>
 
-#v(10pt)
-#text(size: 12pt, fill: rgb("#94a3b8"), style: "italic")[*Важно:* Реальные финансовые объемы скрыты коэффицентом деноминации. Динамика роста и процентные соотношения полностью соответствуют оригиналу.]
+    <div class="panel span12">
+      <div class="p-head">
+        <div>
+          <div class="p-title" data-i18n="marginTitle">Маржинальность</div>
+          <div class="p-desc" data-i18n="marginDesc">Доля прибыли в выручке, % по месяцам</div>
+        </div>
+        <div class="legend"><span><i class="dot" style="background:var(--rose)"></i><span data-i18n="margin">Маржа</span>&nbsp;%</span></div>
+      </div>
+      <div class="chart-box h-lg"><canvas id="cMargin"></canvas></div>
+    </div>
 
-// --- СЛАЙД 4: Анализ диаграмм и процентов ---
-#heading(level: 1)[Анализ маржинальности и процентов]
+    <div class="panel span12">
+      <div class="p-head">
+        <div>
+          <div class="p-title" data-i18n="yearTitle">Сравнение по годам</div>
+          <div class="p-desc" data-i18n="yearDesc">Суммарная выручка, прибыль и себестоимость</div>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--amber)"></i><span data-i18n="revenue">Выручка</span></span>
+          <span><i class="dot" style="background:var(--teal)"></i><span data-i18n="profit">Прибыль</span></span>
+          <span><i class="dot" style="background:var(--violet)"></i><span data-i18n="costShort">Себест.</span></span>
+        </div>
+      </div>
+      <div class="chart-box h-lg"><canvas id="cYear"></canvas></div>
+    </div>
 
-#set text(size: 16pt)
-Нижние блоки информации по процентам и диаграммам тренда:
+    <div class="panel span12">
+      <div class="p-head">
+        <div>
+          <div class="p-title" data-i18n="stockTitle">Остаток на складе</div>
+          <div class="p-desc" data-i18n="stockDesc">Сумма остатков по месяцам</div>
+        </div>
+        <div class="legend"><span><i class="dot" style="background:var(--amber)"></i><span data-i18n="stock">Остаток</span></span></div>
+      </div>
+      <div class="chart-box h-lg"><canvas id="cStock"></canvas></div>
+    </div>
 
-#v(15pt)
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 30pt,
-  [
-    #set text(size: 14pt)
-    - *Растущий тренд:* Несмотря на искусственное уменьшение цифр в 10 раз, наглядный рост операционной эффективности сохранен.
-    - *Минимум (2023):* Начальные показатели маржи составляли *25.7%*.
-    - *Максимум (2026):* Текущий срез демонстрирует рост эффективности до *35.6%*.
-  ],
-  [
-    #block(fill: rgb("#121a26"), inset: 15pt, radius: 10pt, stroke: 1pt + rgb("#1d283a"))[
-      #text(size: 13pt, weight: "bold", fill: rgb("#00ccff"))[Визуализация тренда маржи:]
-      #v(8pt)
-      2023 (25.7%) #progress-bar(25.7%, color: rgb("#ef4444"))
-      #v(5pt)
-      2024 (28.9%) #progress-bar(28.9%, color: rgb("#f59e0b"))
-      #v(5pt)
-      2025 (33.2%) #progress-bar(33.2%, color: rgb("#10b981"))
-      #v(5pt)
-      2026 (35.6%) #progress-bar(35.6%, color: rgb("#00ffcc"))
-    ]
-  ]
-)
+    <div class="panel span8">
+      <div class="p-head">
+        <div>
+          <div class="p-title" data-i18n="countTitle">Количество продаж</div>
+          <div class="p-desc" data-i18n="countDesc">Объём в штуках по месяцам</div>
+        </div>
+        <div class="legend"><span><i class="dot" style="background:var(--violet)"></i><span data-i18n="units">Шт.</span></span></div>
+      </div>
+      <div class="chart-box h-mid"><canvas id="cCount"></canvas></div>
+    </div>
 
-// --- СЛАЙД 5: Заключение ---
-#heading(level: 1)[Итоговые выводы]
+    <div class="panel span4">
+      <div class="p-head">
+        <div>
+          <div class="p-title" id="donutTitle">Структура (всё)</div>
+          <div class="p-desc" data-i18n="structDesc">Себестоимость vs прибыль</div>
+        </div>
+      </div>
+      <div class="chart-box h-mid"><canvas id="cDonut"></canvas></div>
+    </div>
 
-#v(10pt)
-#set text(size: 16pt)
-1. Все диаграммы, объемы продаж в штуках и финансовые результаты успешно изменены.
-2. Реальные данные защищены от компрометации.
-3. Презентация полностью готова к демонстрации.
+    <!-- BRANCH ANALYTICS -->
+    <div class="panel span12" style="margin-top: 24px; border-color: rgba(61, 215, 196, 0.25);">
+      <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--teal);" data-i18n="branchTitle">Аналитика филиалов</h2>
+    </div>
 
-#v(25pt)
-#align(center)[
-  #text(weight: "bold", fill: rgb("#00ccff"), size: 18pt)[Конфиденциальность данных успешно обеспечена.]
-]
+    <div class="panel span8">
+      <div class="p-head">
+        <div>
+          <div class="p-title" data-i18n="branchRankTitle">Рейтинг филиалов по прибыли</div>
+          <div class="p-desc" data-i18n="branchRankDesc">Суммарная прибыль по филиалам за выбранный период</div>
+        </div>
+      </div>
+      <div class="chart-box h-lg"><canvas id="cBranchRank"></canvas></div>
+    </div>
+
+    <div class="panel span4">
+      <div class="p-head">
+        <div>
+          <div class="p-title" data-i18n="branchDetailTitle">Анализ отдельного филиала</div>
+          <div class="p-desc" data-i18n="branchDetailDesc">Помесячная динамика прибыли выбранного филиала</div>
+        </div>
+      </div>
+      <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px;">
+        <label for="branchSelect" style="font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted);" data-i18n="selectBranch">Выберите филиал</label>
+        <select id="branchSelect"></select>
+      </div>
+      <div class="chart-box h-mid"><canvas id="cBranchDetail"></canvas></div>
+    </div>
+
+    </section>
+
+  <footer>
+    <span id="src">Источник: Chexol-Shisha.xlsx · окт 2023 – апр 2026 · 31 месяц</span>
+    <span id="gen">—</span>
+  </footer>
+</div>
+
+<script>
+const DATA = [{"year":2023,"mm":"10","label":"Окт 23","count":63494,"revenue":4943.33,"stock":9880.08,"profit":1327.31,"cost":3616.02,"margin":26.9,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":0.0,"40 Qo'qon":0.0,"44 O'rikzor":0.0,"50 Namangan":0.0,"51 O'rikzor":0.0,"55 Izza":0.0,"60 Andijon":0.0,"61 O'rikzor":0.0,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":0.0,"77 Termiz":0.0,"80 Buxoro":0.0,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2023,"mm":"11","label":"Ноя 23","count":84550,"revenue":5178.8,"stock":9398.79,"profit":1296.91,"cost":3881.89,"margin":25.0,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":0.0,"40 Qo'qon":0.0,"44 O'rikzor":0.0,"50 Namangan":0.0,"51 O'rikzor":0.0,"55 Izza":0.0,"60 Andijon":0.0,"61 O'rikzor":0.0,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":0.0,"77 Termiz":0.0,"80 Buxoro":0.0,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2023,"mm":"12","label":"Дек 23","count":68327,"revenue":4115.11,"stock":15080.74,"profit":1027.67,"cost":3087.44,"margin":25.0,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":0.0,"40 Qo'qon":0.0,"44 O'rikzor":0.0,"50 Namangan":0.0,"51 O'rikzor":0.0,"55 Izza":0.0,"60 Andijon":0.0,"61 O'rikzor":0.0,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":0.0,"77 Termiz":0.0,"80 Buxoro":0.0,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2024,"mm":"01","label":"Янв 24","count":69482,"revenue":4784.05,"stock":14293.89,"profit":1259.41,"cost":3524.64,"margin":26.3,"branches":{"22 Distributsiya":152.06,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":118.41,"31 Samarqand":0.0,"40 Qo'qon":238.97,"44 O'rikzor":0.0,"50 Namangan":263.03,"51 O'rikzor":275.53,"55 Izza":397.38,"60 Andijon":298.22,"61 O'rikzor":183.71,"64 O'rikzor":209.04,"66 Mobicom":1052.54,"70 Qarshi":0.0,"77 Termiz":401.26,"80 Buxoro":0.0,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":82.16}},{"year":2024,"mm":"02","label":"Фев 24","count":51880,"revenue":3818.21,"stock":13271.88,"profit":1064.95,"cost":2753.25,"margin":27.9,"branches":{"22 Distributsiya":123.05,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":197.05,"31 Samarqand":0.0,"40 Qo'qon":183.37,"44 O'rikzor":0.0,"50 Namangan":145.53,"51 O'rikzor":195.43,"55 Izza":273.39,"60 Andijon":270.77,"61 O'rikzor":201.64,"64 O'rikzor":188.64,"66 Mobicom":821.64,"70 Qarshi":0.0,"77 Termiz":249.75,"80 Buxoro":0.0,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":101.26}},{"year":2024,"mm":"03","label":"Мар 24","count":55364,"revenue":3988.25,"stock":11016.18,"profit":1114.21,"cost":2874.04,"margin":27.9,"branches":{"22 Distributsiya":97.15,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":182.12,"31 Samarqand":0.0,"40 Qo'qon":251.7,"44 O'rikzor":0.0,"50 Namangan":126.11,"51 O'rikzor":243.28,"55 Izza":357.84,"60 Andijon":292.84,"61 O'rikzor":297.4,"64 O'rikzor":186.94,"66 Mobicom":643.79,"70 Qarshi":0.0,"77 Termiz":349.4,"80 Buxoro":0.0,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":1.08,"E2 Internet Magazin":0.0,"E105 Oskar":77.59}},{"year":2024,"mm":"04","label":"Апр 24","count":50306,"revenue":3678.35,"stock":10210.63,"profit":914.93,"cost":2763.42,"margin":24.9,"branches":{"22 Distributsiya":51.59,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":92.34,"31 Samarqand":120.15,"40 Qo'qon":188.82,"44 O'rikzor":0.0,"50 Namangan":184.68,"51 O'rikzor":342.75,"55 Izza":295.5,"60 Andijon":386.33,"61 O'rikzor":176.73,"64 O'rikzor":0.0,"66 Mobicom":531.06,"70 Qarshi":0.0,"77 Termiz":403.2,"80 Buxoro":0.0,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":82.32}},{"year":2024,"mm":"05","label":"Май 24","count":54103,"revenue":4424.91,"stock":9155.69,"profit":1215.79,"cost":3209.13,"margin":27.5,"branches":{"22 Distributsiya":161.23,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":127.45,"31 Samarqand":217.37,"40 Qo'qon":297.33,"44 O'rikzor":0.0,"50 Namangan":160.7,"51 O'rikzor":457.79,"55 Izza":218.69,"60 Andijon":354.21,"61 O'rikzor":229.97,"64 O'rikzor":0.0,"66 Mobicom":737.45,"70 Qarshi":87.63,"77 Termiz":411.84,"80 Buxoro":91.09,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":118.16}},{"year":2024,"mm":"06","label":"Июн 24","count":52099,"revenue":4034.16,"stock":8361.41,"profit":1117.88,"cost":2916.28,"margin":27.7,"branches":{"22 Distributsiya":70.45,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":17.08,"31 Samarqand":233.01,"40 Qo'qon":216.62,"44 O'rikzor":0.0,"50 Namangan":141.26,"51 O'rikzor":351.37,"55 Izza":508.42,"60 Andijon":348.13,"61 O'rikzor":217.17,"64 O'rikzor":0.0,"66 Mobicom":420.0,"70 Qarshi":150.45,"77 Termiz":369.54,"80 Buxoro":138.51,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":2.02,"E2 Internet Magazin":0.0,"E105 Oskar":88.4}},{"year":2024,"mm":"07","label":"Июл 24","count":50448,"revenue":4144.84,"stock":6815.32,"profit":1231.82,"cost":2913.02,"margin":29.7,"branches":{"22 Distributsiya":122.01,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":166.97,"40 Qo'qon":248.65,"44 O'rikzor":0.0,"50 Namangan":160.57,"51 O'rikzor":405.24,"55 Izza":376.28,"60 Andijon":362.78,"61 O'rikzor":252.87,"64 O'rikzor":0.0,"66 Mobicom":558.75,"70 Qarshi":144.66,"77 Termiz":361.51,"80 Buxoro":128.73,"85 Navoiy":0.0,"90 Urganch":0.0,"95 Nukus":0.0,"E1 Internet Magazin":6.24,"E2 Internet Magazin":0.0,"E105 Oskar":44.59}},{"year":2024,"mm":"08","label":"Авг 24","count":50377,"revenue":3834.18,"stock":12184.31,"profit":1218.74,"cost":2615.44,"margin":31.8,"branches":{"22 Distributsiya":58.54,"23 Distributsiya":0.0,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":246.31,"40 Qo'qon":182.6,"44 O'rikzor":0.0,"50 Namangan":141.1,"51 O'rikzor":414.8,"55 Izza":359.1,"60 Andijon":247.94,"61 O'rikzor":201.12,"64 O'rikzor":0.0,"66 Mobicom":508.89,"70 Qarshi":154.8,"77 Termiz":305.95,"80 Buxoro":136.22,"85 Navoiy":0.0,"90 Urganch":5.1,"95 Nukus":0.0,"E1 Internet Magazin":7.2,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2024,"mm":"09","label":"Сен 24","count":59593,"revenue":4967.87,"stock":10384.5,"profit":1541.19,"cost":3426.69,"margin":31.0,"branches":{"22 Distributsiya":89.56,"23 Distributsiya":25.57,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":222.88,"40 Qo'qon":238.06,"44 O'rikzor":0.0,"50 Namangan":185.37,"51 O'rikzor":377.35,"55 Izza":415.21,"60 Andijon":298.05,"61 O'rikzor":254.15,"64 O'rikzor":0.0,"66 Mobicom":704.55,"70 Qarshi":154.54,"77 Termiz":354.28,"80 Buxoro":199.84,"85 Navoiy":0.0,"90 Urganch":233.74,"95 Nukus":0.0,"E1 Internet Magazin":1.18,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2024,"mm":"10","label":"Окт 24","count":48769,"revenue":4127.16,"stock":8811.38,"profit":1281.92,"cost":2845.24,"margin":31.1,"branches":{"22 Distributsiya":77.78,"23 Distributsiya":80.75,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":170.36,"40 Qo'qon":184.94,"44 O'rikzor":0.0,"50 Namangan":149.0,"51 O'rikzor":347.64,"55 Izza":394.11,"60 Andijon":271.81,"61 O'rikzor":189.08,"64 O'rikzor":0.0,"66 Mobicom":429.88,"70 Qarshi":78.55,"77 Termiz":255.64,"80 Buxoro":129.34,"85 Navoiy":66.6,"90 Urganch":183.13,"95 Nukus":0.0,"E1 Internet Magazin":1.76,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2024,"mm":"11","label":"Ноя 24","count":47534,"revenue":4075.9,"stock":18492.2,"profit":1281.06,"cost":2794.84,"margin":31.4,"branches":{"22 Distributsiya":71.26,"23 Distributsiya":64.58,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":257.45,"40 Qo'qon":164.29,"44 O'rikzor":0.0,"50 Namangan":134.59,"51 O'rikzor":345.37,"55 Izza":505.02,"60 Andijon":327.0,"61 O'rikzor":200.68,"64 O'rikzor":14.75,"66 Mobicom":198.22,"70 Qarshi":85.52,"77 Termiz":379.08,"80 Buxoro":131.3,"85 Navoiy":78.41,"90 Urganch":120.83,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2024,"mm":"12","label":"Дек 24","count":43118,"revenue":4038.95,"stock":18451.3,"profit":1201.55,"cost":2837.4,"margin":29.7,"branches":{"22 Distributsiya":51.6,"23 Distributsiya":48.63,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":186.83,"40 Qo'qon":213.16,"44 O'rikzor":0.0,"50 Namangan":151.79,"51 O'rikzor":275.25,"55 Izza":603.02,"60 Andijon":235.96,"61 O'rikzor":134.79,"64 O'rikzor":0.0,"66 Mobicom":-1.68,"70 Qarshi":130.74,"77 Termiz":287.17,"80 Buxoro":177.49,"85 Navoiy":84.78,"90 Urganch":94.16,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2025,"mm":"01","label":"Янв 25","count":61647,"revenue":4810.38,"stock":23484.4,"profit":1623.61,"cost":3186.76,"margin":33.8,"branches":{"22 Distributsiya":54.47,"23 Distributsiya":69.42,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":393.74,"40 Qo'qon":150.61,"44 O'rikzor":0.0,"50 Namangan":255.79,"51 O'rikzor":439.54,"55 Izza":669.18,"60 Andijon":326.05,"61 O'rikzor":229.94,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":218.54,"77 Termiz":444.77,"80 Buxoro":240.98,"85 Navoiy":157.09,"90 Urganch":223.28,"95 Nukus":0.0,"E1 Internet Magazin":1.16,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2025,"mm":"02","label":"Фев 25","count":58818,"revenue":4146.21,"stock":19656.1,"profit":1375.26,"cost":2770.95,"margin":33.2,"branches":{"22 Distributsiya":35.48,"23 Distributsiya":70.87,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":234.93,"40 Qo'qon":157.83,"44 O'rikzor":0.0,"50 Namangan":225.19,"51 O'rikzor":295.35,"55 Izza":663.11,"60 Andijon":314.78,"61 O'rikzor":141.47,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":167.79,"77 Termiz":423.75,"80 Buxoro":247.61,"85 Navoiy":109.3,"90 Urganch":197.67,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":6.57,"E105 Oskar":0.0}},{"year":2025,"mm":"03","label":"Мар 25","count":66977,"revenue":6119.73,"stock":18854.2,"profit":2003.13,"cost":4116.6,"margin":32.7,"branches":{"22 Distributsiya":76.22,"23 Distributsiya":83.04,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":535.05,"40 Qo'qon":200.97,"44 O'rikzor":0.0,"50 Namangan":346.31,"51 O'rikzor":461.72,"55 Izza":886.14,"60 Andijon":517.73,"61 O'rikzor":292.44,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":223.02,"77 Termiz":388.6,"80 Buxoro":286.22,"85 Navoiy":133.1,"90 Urganch":282.83,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":12.06,"E105 Oskar":0.0}},{"year":2025,"mm":"04","label":"Апр 25","count":65885,"revenue":6690.95,"stock":12989.8,"profit":2008.01,"cost":4682.93,"margin":30.0,"branches":{"22 Distributsiya":48.14,"23 Distributsiya":89.84,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":508.09,"40 Qo'qon":330.46,"44 O'rikzor":0.0,"50 Namangan":426.99,"51 O'rikzor":616.32,"55 Izza":1380.4,"60 Andijon":683.68,"61 O'rikzor":528.47,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":236.16,"77 Termiz":699.59,"80 Buxoro":304.33,"85 Navoiy":231.71,"90 Urganch":457.26,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":31.45,"E105 Oskar":0.0}},{"year":2025,"mm":"05","label":"Май 25","count":50253,"revenue":4528.86,"stock":13329.5,"profit":1487.46,"cost":3041.4,"margin":32.8,"branches":{"22 Distributsiya":33.52,"23 Distributsiya":98.95,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":321.46,"40 Qo'qon":190.44,"44 O'rikzor":0.0,"50 Namangan":194.12,"51 O'rikzor":446.89,"55 Izza":1109.74,"60 Andijon":416.0,"61 O'rikzor":251.87,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":114.3,"77 Termiz":457.99,"80 Buxoro":345.78,"85 Navoiy":197.44,"90 Urganch":269.36,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":9.73,"E105 Oskar":0.0}},{"year":2025,"mm":"06","label":"Июн 25","count":51757,"revenue":4692.21,"stock":16247.7,"profit":1560.88,"cost":3131.33,"margin":33.3,"branches":{"22 Distributsiya":43.86,"23 Distributsiya":170.54,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":340.46,"40 Qo'qon":226.88,"44 O'rikzor":0.0,"50 Namangan":185.58,"51 O'rikzor":566.66,"55 Izza":973.47,"60 Andijon":449.21,"61 O'rikzor":295.36,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":127.45,"77 Termiz":520.89,"80 Buxoro":263.0,"85 Navoiy":159.8,"90 Urganch":324.28,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":6.47,"E105 Oskar":0.0}},{"year":2025,"mm":"07","label":"Июл 25","count":70721,"revenue":4985.37,"stock":17190.6,"profit":1712.75,"cost":3272.62,"margin":34.4,"branches":{"22 Distributsiya":0.85,"23 Distributsiya":152.3,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":444.53,"40 Qo'qon":122.8,"44 O'rikzor":0.0,"50 Namangan":341.8,"51 O'rikzor":530.77,"55 Izza":980.4,"60 Andijon":368.9,"61 O'rikzor":235.36,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":97.2,"77 Termiz":592.77,"80 Buxoro":376.74,"85 Navoiy":283.34,"90 Urganch":318.14,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":24.89,"E105 Oskar":0.0}},{"year":2025,"mm":"08","label":"Авг 25","count":51363,"revenue":4888.73,"stock":16717.4,"profit":1597.28,"cost":3291.45,"margin":32.7,"branches":{"22 Distributsiya":-0.81,"23 Distributsiya":144.31,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":379.43,"40 Qo'qon":195.44,"44 O'rikzor":0.0,"50 Namangan":231.17,"51 O'rikzor":484.28,"55 Izza":1358.13,"60 Andijon":264.95,"61 O'rikzor":261.88,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":135.01,"77 Termiz":376.2,"80 Buxoro":301.47,"85 Navoiy":208.37,"90 Urganch":327.73,"95 Nukus":0.0,"E1 Internet Magazin":10.32,"E2 Internet Magazin":11.99,"E105 Oskar":0.0}},{"year":2025,"mm":"09","label":"Сен 25","count":59955,"revenue":6056.83,"stock":21338.7,"profit":2181.73,"cost":3875.1,"margin":36.0,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":172.63,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":510.84,"40 Qo'qon":439.48,"44 O'rikzor":0.0,"50 Namangan":356.99,"51 O'rikzor":562.12,"55 Izza":1305.57,"60 Andijon":576.13,"61 O'rikzor":315.48,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":163.99,"77 Termiz":490.99,"80 Buxoro":331.51,"85 Navoiy":333.68,"90 Urganch":329.1,"95 Nukus":0.0,"E1 Internet Magazin":25.35,"E2 Internet Magazin":9.69,"E105 Oskar":0.0}},{"year":2025,"mm":"10","label":"Окт 25","count":61473,"revenue":7068.37,"stock":19480.6,"profit":2553.73,"cost":4514.64,"margin":36.1,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":204.16,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":539.01,"40 Qo'qon":250.79,"44 O'rikzor":0.0,"50 Namangan":367.28,"51 O'rikzor":680.29,"55 Izza":1165.8,"60 Andijon":509.41,"61 O'rikzor":447.71,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":227.31,"77 Termiz":648.7,"80 Buxoro":783.05,"85 Navoiy":338.55,"90 Urganch":639.57,"95 Nukus":0.0,"E1 Internet Magazin":73.88,"E2 Internet Magazin":2.93,"E105 Oskar":0.0}},{"year":2025,"mm":"11","label":"Ноя 25","count":49483,"revenue":7727.46,"stock":18087.3,"profit":2540.38,"cost":5187.08,"margin":32.9,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":161.7,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":787.85,"40 Qo'qon":303.56,"44 O'rikzor":0.0,"50 Namangan":376.66,"51 O'rikzor":627.4,"55 Izza":1084.63,"60 Andijon":733.42,"61 O'rikzor":315.24,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":410.29,"77 Termiz":826.47,"80 Buxoro":964.98,"85 Navoiy":335.88,"90 Urganch":658.1,"95 Nukus":0.0,"E1 Internet Magazin":8.42,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2025,"mm":"12","label":"Дек 25","count":50896,"revenue":8542.54,"stock":16277.5,"profit":2654.92,"cost":5887.63,"margin":31.1,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":231.36,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":680.34,"40 Qo'qon":166.95,"44 O'rikzor":57.69,"50 Namangan":376.19,"51 O'rikzor":719.82,"55 Izza":961.22,"60 Andijon":623.09,"61 O'rikzor":243.31,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":779.33,"77 Termiz":672.81,"80 Buxoro":518.68,"85 Navoiy":544.04,"90 Urganch":1089.28,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2026,"mm":"01","label":"Янв 26","count":56798,"revenue":7336.84,"stock":16533.0,"profit":2463.8,"cost":4873.05,"margin":33.6,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":298.73,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":589.09,"40 Qo'qon":403.5,"44 O'rikzor":780.59,"50 Namangan":426.71,"51 O'rikzor":555.65,"55 Izza":803.52,"60 Andijon":693.91,"61 O'rikzor":248.48,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":396.58,"77 Termiz":612.93,"80 Buxoro":467.04,"85 Navoiy":417.27,"90 Urganch":571.11,"95 Nukus":0.0,"E1 Internet Magazin":0.61,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2026,"mm":"02","label":"Фев 26","count":51544,"revenue":7452.04,"stock":22025.6,"profit":2520.2,"cost":4931.84,"margin":33.8,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":260.97,"25 Abu Sahiy":19.67,"30 Samarqand":0.0,"31 Samarqand":505.4,"40 Qo'qon":268.19,"44 O'rikzor":860.26,"50 Namangan":412.71,"51 O'rikzor":563.13,"55 Izza":1112.67,"60 Andijon":634.87,"61 O'rikzor":358.15,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":361.87,"77 Termiz":578.03,"80 Buxoro":591.05,"85 Navoiy":470.86,"90 Urganch":470.56,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2026,"mm":"03","label":"Мар 26","count":57440,"revenue":9102.9,"stock":22129.0,"profit":3143.13,"cost":5959.77,"margin":34.5,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":604.28,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":715.69,"40 Qo'qon":479.97,"44 O'rikzor":1423.33,"50 Namangan":364.94,"51 O'rikzor":878.49,"55 Izza":1188.44,"60 Andijon":885.75,"61 O'rikzor":329.52,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":371.33,"77 Termiz":770.16,"80 Buxoro":725.87,"85 Navoiy":480.98,"90 Urganch":554.82,"95 Nukus":0.0,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2026,"mm":"04","label":"Апр 26","count":77841,"revenue":11666.68,"stock":15908.6,"profit":4458.9,"cost":7207.78,"margin":38.2,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":1071.63,"25 Abu Sahiy":0.0,"30 Samarqand":0.0,"31 Samarqand":618.97,"40 Qo'qon":248.23,"44 O'rikzor":1590.7,"50 Namangan":453.57,"51 O'rikzor":917.09,"55 Izza":1311.0,"60 Andijon":847.26,"61 O'rikzor":475.56,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":562.05,"77 Termiz":828.18,"80 Buxoro":824.49,"85 Navoiy":852.63,"90 Urganch":616.88,"95 Nukus":390.69,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}},{"year":2026,"mm":"05","label":"Май 26","count":58279,"revenue":9262.36,"stock":12327.9,"profit":3389.73,"cost":5872.63,"margin":36.6,"branches":{"22 Distributsiya":0.0,"23 Distributsiya":915.72,"25 Abu Sahiy":0.07,"30 Samarqand":0.0,"31 Samarqand":755.95,"40 Qo'qon":500.72,"44 O'rikzor":1006.92,"50 Namangan":359.24,"51 O'rikzor":595.1,"55 Izza":968.61,"60 Andijon":679.73,"61 O'rikzor":333.18,"64 O'rikzor":0.0,"66 Mobicom":0.0,"70 Qarshi":328.09,"77 Termiz":531.87,"80 Buxoro":584.32,"85 Navoiy":924.4,"90 Urganch":503.88,"95 Nukus":287.18,"E1 Internet Magazin":0.0,"E2 Internet Magazin":0.0,"E105 Oskar":0.0}}];
+
+/* ---------- i18n ---------- */
+let curLang = 'ru';
+const T = {
+  ru:{
+    brand:'Аналитика продаж Nillmax · Дашборд',
+    subtitle:'Динамика продаж Nillmax: выручка, прибыль, остатки, маржинальность и аналитика филиалов по месяцам.',
+    branchTitle:'Аналитика филиалов',
+    branchRankTitle:'Рейтинг филиалов по прибыли',
+    branchRankDesc:'Суммарная прибыль по филиалам за выбранный период',
+    branchDetailTitle:'Анализ отдельного филиала',
+    branchDetailDesc:'Помесячная динамика прибыли выбранного филиала',
+    selectBranch:'Выберите филиал',
+    branchProfit:'Прибыль филиала',
+    period:'Период', all:'Все',
+    revTitle:'Выручка и валовая прибыль', revDesc:'Помесячная динамика',
+    marginTitle:'Маржинальность', marginDesc:'Доля прибыли в выручке, % по месяцам',
+    yearTitle:'Сравнение по годам', yearDesc:'Суммарная выручка, прибыль и себестоимость',
+    stockTitle:'Остаток на складе', stockDesc:'Сумма остатков по месяцам',
+    countTitle:'Количество продаж', countDesc:'Объём в штуках по месяцам',
+    structDesc:'Себестоимость vs прибыль',
+    revenue:'Выручка', profit:'Прибыль', cost:'Себестоимость', costShort:'Себест.',
+    margin:'Маржа', units:'Шт.', stock:'Остаток',
+    kRev:'Выручка', kProfit:'Валовая прибыль', kUnits:'Продано, шт.', kTrend:'Тренд выручки',
+    sAll:'за весь период', sYear:y=>'за '+y+' год', sMargin:m=>'маржа '+m+'%',
+    sUnits:'единиц товара', sTrend:n=>'последние '+n+' мес.', sNoData:'нет данных',
+    structAll:'Структура (всё)', structYear:y=>'Структура '+y,
+    donutAll:'Выручка всего: ', donutYear:y=>'Выручка '+y+': ',
+    tipMargin:'Маржа: ', tipStock:'Остаток: ', tipUnits:' шт.',
+    src:'Источник: Nillmax Свод.xlsx · окт 2023 – май 2026 · 32 месяца',
+    gen:'Сгенерировано ', kSuffix:'К', locale:'ru-RU'
+  },
+  uz:{
+    brand:'Nillmax savdo tahlili · Boshqaruv paneli',
+    subtitle:"Nillmax savdosi dinamikasi: tushum, foyda, qoldiq, marjinallik va filiallar tahlili.",
+    branchTitle:'Filiallar tahlili',
+    branchRankTitle:'Filiallar foyda reytingi',
+    branchRankDesc:'Tanlangan davr uchun filiallar jami foydasi',
+    branchDetailTitle:'Filial batafsil tahlili',
+    branchDetailDesc:'Tanlangan filial foydasining oylik dinamikasi',
+    selectBranch:'Filialni tanlang',
+    branchProfit:'Filial foydasi',
+    period:'Davr', all:'Hammasi',
+    revTitle:'Tushum va yalpi foyda', revDesc:"Oylar bo'yicha dinamika",
+    marginTitle:'Marjinallik', marginDesc:"Tushumdagi foyda ulushi, % oylar bo'yicha",
+    yearTitle:"Yillar bo'yicha taqqoslash", yearDesc:'Jami tushum, foyda va tannarx',
+    stockTitle:'Ombordagi qoldiq', stockDesc:"Oylar bo'yicha qoldiq summasi",
+    countTitle:'Sotuvlar soni', countDesc:"Oylar bo'yicha dona hajmi",
+    structDesc:'Tannarx va foyda',
+    revenue:'Tushum', profit:'Foyda', cost:'Tannarx', costShort:'Tannarx',
+    margin:'Marja', units:'Dona', stock:'Qoldiq',
+    kRev:'Tushum', kProfit:'Yalpi foyda', kUnits:'Sotilgan, dona', kTrend:'Tushum tendensiyasi',
+    sAll:'butun davr uchun', sYear:y=>y+' yil uchun', sMargin:m=>'marja '+m+'%',
+    sUnits:'dona mahsulot', sTrend:n=>'oxirgi '+n+' oy', sNoData:"ma'lumot yo'q",
+    structAll:'Tuzilma (hammasi)', structYear:y=>'Tuzilma '+y,
+    donutAll:'Jami tushum: ', donutYear:y=>y+' tushum: ',
+    tipMargin:'Marja: ', tipStock:'Qoldiq: ', tipUnits:' dona',
+    src:'Manba: Nillmax Свод.xlsx · okt 2023 – may 2026 · 32 oy',
+    gen:'Yaratilgan ', kSuffix:'K', locale:'ru-RU'
+  }
+};
+const MON = {
+  ru:{'01':'Янв','02':'Фев','03':'Мар','04':'Апр','05':'Май','06':'Июн','07':'Июл','08':'Авг','09':'Сен','10':'Окт','11':'Ноя','12':'Дек'},
+  uz:{'01':'Yan','02':'Fev','03':'Mar','04':'Apr','05':'May','06':'Iyn','07':'Iyl','08':'Avg','09':'Sen','10':'Okt','11':'Noy','12':'Dek'}
+};
+const tr = () => T[curLang];
+const lbl = d => MON[curLang][d.mm] + ' ' + String(d.year).slice(2);
+
+/* ---------- helpers ---------- */
+const fmt  = n => new Intl.NumberFormat('ru-RU').format(Math.round(n));
+const fmtK = n => Math.abs(n)>=1000 ? (n/1000).toFixed(n>=10000?0:1)+'k' : fmt(n);
+const kLbl = v => v>=1000 ? Math.round(v/1000)+tr().kSuffix : fmt(v);
+const sum  = a => a.reduce((s,x)=>s+x,0);
+const css  = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const AMBER='rgb(255,180,84)', TEAL='rgb(61,215,196)', VIOLET='rgb(155,140,255)', ROSE='rgb(255,122,138)';
+const YEARS=[...new Set(DATA.map(d=>d.year))];
+
+/* ---------- chart defaults ---------- */
+Chart.register(ChartDataLabels);
+Chart.defaults.set('plugins.datalabels', {display:false});
+Chart.defaults.font.family = 'Manrope, sans-serif';
+Chart.defaults.color = css('--muted');
+Chart.defaults.font.size = 12;
+const GRID = css('--grid');
+const tip = {
+  backgroundColor:'#0a0e14', borderColor:css('--line'), borderWidth:1,
+  titleColor:css('--txt'), bodyColor:css('--muted'), padding:12, cornerRadius:10,
+  titleFont:{family:'Bricolage Grotesque',weight:'700',size:13}, displayColors:true, boxPadding:5
+};
+const baseScales = {
+  x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:12,color:css('--muted')}},
+  y:{grid:{color:GRID,drawBorder:false},border:{display:false},ticks:{callback:v=>fmtK(v),color:css('--muted')}}
+};
+function grad(ctx, color, a1=.45, a2=0){
+  const c=ctx.chart.ctx; const g=c.createLinearGradient(0,0,0,ctx.chart.height||300);
+  g.addColorStop(0, color.replace(')',`,${a1})`).replace('rgb','rgba'));
+  g.addColorStop(1, color.replace(')',`,${a2})`).replace('rgb','rgba'));
+  return g;
+}
+
+/* ---------- state ---------- */
+let current='all';
+const rowsFor = y => y==='all' ? DATA : DATA.filter(d=>d.year==y);
+
+/* ---------- KPI ---------- */
+const I={
+  rev:'<path d="M3 3v18h18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M7 14l4-4 3 3 5-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  profit:'<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  units:'<rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" fill="none"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" fill="none"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" fill="none"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" fill="none"/>',
+  margin:'<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8.5 15.5l7-7M9 9.5h.01M15 14.5h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+};
+function renderKpis(rows){
+  const d=tr();
+  const rev=rows.map(r=>r.revenue), prof=rows.map(r=>r.profit), cnt=rows.map(r=>r.count);
+  const totRev=sum(rev), totProfit=sum(prof), totCount=sum(cnt);
+  const avgMargin = totRev? totProfit/totRev*100 : 0;
+  const n=Math.min(3,Math.floor(rows.length/2));
+  let trendTxt='—', cls='', sub=d.sNoData;
+  if(n>=1){
+    const last=sum(rev.slice(-n)), prev=sum(rev.slice(-2*n,-n));
+    if(prev>0){const v=(last-prev)/prev*100; trendTxt=(v>=0?'+':'')+v.toFixed(1)+'%'; cls=v>=0?'up':'down'; sub=d.sTrend(n);}
+  }
+  const periodSub = current==='all' ? d.sAll : d.sYear(current);
+  const cards=[
+    {lbl:d.kRev, val:fmt(totRev), sub:periodSub, acc:'--amber', soft:'var(--amber-soft)', ico:I.rev},
+    {lbl:d.kProfit, val:fmt(totProfit), sub:d.sMargin(avgMargin.toFixed(1)), acc:'--teal', soft:'var(--teal-soft)', ico:I.profit},
+    {lbl:d.kUnits, val:fmt(totCount), sub:d.sUnits, acc:'--violet', soft:'rgba(155,140,255,.14)', ico:I.units},
+    {lbl:d.kTrend, val:trendTxt, sub:sub, acc:cls==='down'?'--rose':'--teal', soft:cls==='down'?'rgba(255,122,138,.14)':'var(--teal-soft)', ico:I.margin, cls:cls},
+  ];
+  document.getElementById('kpis').innerHTML = cards.map(k=>`
+    <div class="kpi" style="--accent:var(${k.acc});--accent-soft:${k.soft}">
+      <div class="ico"><svg viewBox="0 0 24 24">${k.ico}</svg></div>
+      <div class="k-lbl">${k.lbl}</div>
+      <div class="k-val">${k.val}</div>
+      <div class="k-sub ${k.cls||''}">${k.sub}</div>
+    </div>`).join('');
+}
+
+/* ---------- charts (created once, updated on filter/lang) ---------- */
+const C={};
+const init=rowsFor('all'), L0=init.map(lbl);
+
+C.revenue=new Chart(document.getElementById('cRevenue'),{
+  type:'line',
+  data:{labels:L0,datasets:[
+    {label:tr().revenue,data:init.map(d=>d.revenue),borderColor:AMBER,borderWidth:2.5,tension:.38,fill:true,
+      backgroundColor:ctx=>grad(ctx,AMBER,.32),pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:AMBER},
+    {label:tr().profit,data:init.map(d=>d.profit),borderColor:TEAL,borderWidth:2.5,tension:.38,fill:true,
+      backgroundColor:ctx=>grad(ctx,TEAL,.22),pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:TEAL}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...tip,callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)}}},
+    scales:baseScales}
+});
+
+C.margin=new Chart(document.getElementById('cMargin'),{
+  type:'line',
+  data:{labels:L0,datasets:[{
+    label:tr().margin,
+    data:init.map(d=>d.margin),
+    borderColor:ROSE,
+    borderWidth:2.5,
+    tension:.4,
+    fill:true,
+    backgroundColor:ctx=>grad(ctx,ROSE,.25),
+    pointRadius:4,
+    pointBackgroundColor:ROSE,
+    pointBorderColor:'#0a0e14',
+    pointBorderWidth:1.5,
+    pointHoverRadius:7,
+    pointHoverBackgroundColor:ROSE
+  }]},
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    layout:{padding:{top:24}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{...tip,callbacks:{label:c=>' '+tr().tipMargin+c.parsed.y+'%'}},
+      datalabels:{
+        display:true,
+        anchor:'end',
+        align:'top',
+        offset:4,
+        color:(context) => {
+          const index = context.dataIndex;
+          const data = context.dataset.data;
+          if (index === 0) return '#cdd5e2';
+          const diff = data[index] - data[index - 1];
+          return diff >= 0 ? '#3dd7c4' : '#ff7a8a';
+        },
+        font:{
+          family:'JetBrains Mono',
+          size:9,
+          weight:'700'
+        },
+        formatter:(value, context) => {
+          const index = context.dataIndex;
+          const data = context.dataset.data;
+          if (index === 0) return `${value}%`;
+          const diff = value - data[index - 1];
+          const diffStr = diff >= 0 ? `+${diff.toFixed(1)}%` : `${diff.toFixed(1)}%`;
+          if (context.chart.data.labels.length > 14) {
+            return `${value}%`;
+          }
+          return `${value}%\n(${diffStr})`;
+        }
+      }
+    },
+    scales:{
+      ...baseScales,
+      y:{
+        ...baseScales.y,
+        ticks:{callback:v=>v+'%',color:css('--muted')}
+      }
+    }
+  }
+});
+
+C.year=new Chart(document.getElementById('cYear'),{
+  type:'bar',
+  data:{labels:YEARS.map(String),datasets:[
+    {label:tr().revenue,data:YEARS.map(y=>sum(DATA.filter(d=>d.year===y).map(d=>d.revenue))),backgroundColor:AMBER,borderRadius:6,maxBarThickness:80},
+    {label:tr().profit,data:YEARS.map(y=>sum(DATA.filter(d=>d.year===y).map(d=>d.profit))),backgroundColor:TEAL,borderRadius:6,maxBarThickness:80},
+    {label:tr().cost,data:YEARS.map(y=>sum(DATA.filter(d=>d.year===y).map(d=>d.cost))),backgroundColor:VIOLET,borderRadius:6,maxBarThickness:80}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,categoryPercentage:.7,barPercentage:.85,
+    plugins:{legend:{display:false},tooltip:{...tip,callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)}}},
+    scales:baseScales}
+});
+
+C.stock=new Chart(document.getElementById('cStock'),{
+  type:'line',
+  data:{labels:L0,datasets:[{label:tr().stock,data:init.map(d=>d.stock),borderColor:AMBER,borderWidth:2.5,tension:.4,
+    fill:true,backgroundColor:ctx=>grad(ctx,AMBER,.3),
+    pointRadius:2.5,pointBackgroundColor:AMBER,pointHoverRadius:6,pointHoverBackgroundColor:AMBER}]},
+  options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24}},
+    plugins:{legend:{display:false},tooltip:{...tip,callbacks:{label:c=>' '+tr().tipStock+fmt(c.parsed.y)}},
+      datalabels:{display:true,anchor:'end',align:'top',offset:3,color:'#e8c08a',
+        font:{family:'JetBrains Mono',size:9,weight:'700'},formatter:v=>kLbl(v)}},
+    scales:{...baseScales,x:{...baseScales.x,ticks:{...baseScales.x.ticks,maxTicksLimit:16}}}}
+});
+
+C.count=new Chart(document.getElementById('cCount'),{
+  type:'bar',
+  data:{labels:L0,datasets:[{label:tr().units,data:init.map(d=>d.count),borderRadius:5,maxBarThickness:34,
+    backgroundColor:ctx=>grad(ctx,VIOLET,.95,.35),hoverBackgroundColor:VIOLET}]},
+  options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:30}},
+    plugins:{legend:{display:false},tooltip:{...tip,callbacks:{label:c=>' '+fmt(c.parsed.y)+tr().tipUnits}},
+      datalabels:{display:true,anchor:'end',align:'end',offset:2,rotation:-90,color:'#cdd5e2',
+        font:{family:'JetBrains Mono',size:9,weight:'700'},formatter:v=>kLbl(v)}},
+    scales:baseScales}
+});
+
+C.donut=new Chart(document.getElementById('cDonut'),{
+  type:'doughnut',
+  data:{labels:[tr().cost,tr().profit],datasets:[{data:[0,0],
+    backgroundColor:[VIOLET,TEAL],borderColor:css('--card'),borderWidth:4,hoverOffset:8}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'68%',
+    plugins:{
+      legend:{position:'bottom',labels:{padding:16,usePointStyle:true,pointStyle:'circle',color:css('--muted')}},
+      tooltip:{...tip,callbacks:{label:c=>{const t=sum(c.dataset.data);return ' '+c.label+': '+fmt(c.parsed)+' ('+(t?c.parsed/t*100:0).toFixed(1)+'%)'}}},
+      title:{display:true,text:'',color:css('--muted'),font:{size:12,family:'JetBrains Mono'},padding:{bottom:6}}
+    }}
+});
+
+// Branch list
+const BRANCHES = Object.keys(init[0].branches);
+
+// Populate branch dropdown
+const selectEl = document.getElementById('branchSelect');
+selectEl.innerHTML = BRANCHES.map(b => `<option value="${b}">${b}</option>`).join('');
+
+C.branchRank = new Chart(document.getElementById('cBranchRank'), {
+  type: 'bar',
+  data: {
+    labels: [],
+    datasets: [{
+      label: tr().branchProfit,
+      data: [],
+      backgroundColor: TEAL,
+      borderRadius: 5,
+      maxBarThickness: 30
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        ...tip,
+        callbacks: {
+          label: c => ' ' + c.dataset.label + ': ' + fmt(c.parsed.x)
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: GRID, drawBorder: false },
+        border: { display: false },
+        ticks: { callback: v => fmtK(v), color: css('--muted') }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { color: css('--txt'), font: { weight: '600' } }
+      }
+    }
+  }
+});
+
+C.branchDetail = new Chart(document.getElementById('cBranchDetail'), {
+  type: 'line',
+  data: {
+    labels: L0,
+    datasets: [{
+      label: tr().branchProfit,
+      data: [],
+      borderColor: TEAL,
+      borderWidth: 2.5,
+      tension: 0.38,
+      fill: true,
+      backgroundColor: ctx => grad(ctx, TEAL, 0.2, 0),
+      pointRadius: 0,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: TEAL
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        ...tip,
+        callbacks: {
+          label: c => ' ' + c.dataset.label + ': ' + fmt(c.parsed.y)
+        }
+      }
+    },
+    scales: baseScales
+  }
+});
+
+/* ---------- apply filter ---------- */
+function applyFilter(year){
+  current=year;
+  const d=tr();
+  const rows=rowsFor(year);
+  const labels=rows.map(lbl);
+
+  renderKpis(rows);
+
+  C.revenue.data.labels=labels;
+  C.revenue.data.datasets[0].data=rows.map(r=>r.revenue);
+  C.revenue.data.datasets[1].data=rows.map(r=>r.profit);
+  C.margin.data.labels=labels;
+  C.margin.data.datasets[0].data=rows.map(r=>r.margin);
+  C.stock.data.labels=labels;
+  C.stock.data.datasets[0].data=rows.map(r=>r.stock);
+  C.count.data.labels=labels;
+  C.count.data.datasets[0].data=rows.map(r=>r.count);
+  C.count.options.plugins.datalabels.rotation = rows.length>14 ? -90 : 0;
+
+  const yrs = year==='all' ? YEARS : YEARS.filter(y=>y==year);
+  C.year.data.labels=yrs.map(String);
+  C.year.data.datasets[0].data=yrs.map(y=>sum(DATA.filter(r=>r.year===y).map(r=>r.revenue)));
+  C.year.data.datasets[1].data=yrs.map(y=>sum(DATA.filter(r=>r.year===y).map(r=>r.profit)));
+  C.year.data.datasets[2].data=yrs.map(y=>sum(DATA.filter(r=>r.year===y).map(r=>r.cost)));
+
+  const cSum=sum(rows.map(r=>r.cost)), pSum=sum(rows.map(r=>r.profit));
+  C.donut.data.datasets[0].data=[cSum,pSum];
+  C.donut.options.plugins.title.text = (year==='all'?d.donutAll:d.donutYear(year)) + fmt(cSum+pSum);
+  document.getElementById('donutTitle').textContent = year==='all'? d.structAll : d.structYear(year);
+
+  // Update Branch Ranking Chart
+  const branchSums = {};
+  BRANCHES.forEach(b => { branchSums[b] = 0; });
+  rows.forEach(r => {
+    BRANCHES.forEach(b => {
+      branchSums[b] += r.branches[b] || 0;
+    });
+  });
+  const sortedB = Object.keys(branchSums)
+    .map(b => ({ name: b, total: branchSums[b] }))
+    .sort((x, y) => y.total - x.total);
+
+  C.branchRank.data.labels = sortedB.map(x => x.name);
+  C.branchRank.data.datasets[0].data = sortedB.map(x => x.total);
+
+  // Update Branch Detail Chart
+  const activeBranch = selectEl.value;
+  C.branchDetail.data.labels = labels;
+  C.branchDetail.data.datasets[0].data = rows.map(r => r.branches[activeBranch] || 0);
+
+  [C.revenue,C.margin,C.stock,C.count,C.year,C.donut,C.branchRank,C.branchDetail].forEach(c=>c.update());
+}
+
+/* ---------- apply language ---------- */
+function applyLang(lang){
+  curLang=lang;
+  const d=tr();
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = d[el.dataset.i18n]; });
+  document.querySelectorAll('#langSwitch .lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  // chart dataset labels (for tooltips) + donut slice labels
+  C.revenue.data.datasets[0].label=d.revenue;
+  C.revenue.data.datasets[1].label=d.profit;
+  C.margin.data.datasets[0].label=d.margin;
+  C.stock.data.datasets[0].label=d.stock;
+  C.count.data.datasets[0].label=d.units;
+  C.year.data.datasets[0].label=d.revenue;
+  C.year.data.datasets[1].label=d.profit;
+  C.year.data.datasets[2].label=d.cost;
+  C.donut.data.labels=[d.cost,d.profit];
+  C.branchRank.data.datasets[0].label = d.branchProfit;
+  C.branchDetail.data.datasets[0].label = d.branchProfit;
+  document.querySelector('label[for="branchSelect"]').textContent = d.selectBranch;
+  // footer
+  document.getElementById('src').textContent=d.src;
+  document.getElementById('gen').textContent=d.gen+new Date().toLocaleDateString(d.locale);
+  applyFilter(current);
+}
+
+/* ---------- events ---------- */
+document.getElementById('filter').addEventListener('click', e=>{
+  const b=e.target.closest('.pill'); if(!b) return;
+  document.querySelectorAll('#filter .pill').forEach(p=>p.classList.remove('active'));
+  b.classList.add('active');
+  applyFilter(b.dataset.year);
+});
+document.getElementById('langSwitch').addEventListener('click', e=>{
+  const b=e.target.closest('.lang-btn'); if(!b) return;
+  applyLang(b.dataset.lang);
+});
+document.getElementById('branchSelect').addEventListener('change', () => {
+  const activeBranch = selectEl.value;
+  const rows = rowsFor(current);
+  C.branchDetail.data.datasets[0].data = rows.map(r => r.branches[activeBranch] || 0);
+  C.branchDetail.update();
+});
+
+
+/* ---------- init ---------- */
+applyLang('ru');
+</script>
+</body>
+</html>
